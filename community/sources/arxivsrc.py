@@ -4,6 +4,8 @@ from base import Source
 from arxiv import mod_query_result, prune_query_result
 import feedparser
 import time
+from time import mktime
+from datetime import datetime
 import logging
 
 SEARCH_KEY = "cat:cs.CV+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL+OR+cat:cs.NE+OR+cat:stat.ML"
@@ -38,18 +40,23 @@ class ArxivSource(Source):
     def fetch_new(self):
         from ..db import session_scope, ArxivModel
         with session_scope() as session:
-            for i in range(0, 100, MAX_QUERY_NUM):
+            for i in range(0, MAX_QUERY_NUM, 100):
+                logging.info("get paper starting from {}".format(i))
                 results = query_arxiv(start=i)
                 for result in results:
                     arxiv_url = result["arxiv_url"]
                     if session.query(ArxivModel).filter_by(arxiv_url=arxiv_url).count() == 0:
-                        print result["title"].replace("\n", "")
-                        print result["summary"].replace("\n", "")
-                    print
-                    # print result["pdf_url"]
-                    # print ", ".join(result["authors"])
-                    # print result["updated_parsed"]
-                    # print result["journal_reference"]
-                    # print " | ".join([x["term"] for x in result["tags"]])
-                    break
-                break
+                        new_paper = ArxivModel(
+                            arxiv_url=arxiv_url,
+                            version=self._get_version(arxiv_url),
+                            title=result["title"].replace("\n", ""),
+                            abstract=result["summary"].replace("\n", ""),
+                            pdf_url=result["pdf_url"],
+                            authors=", ".join(result["authors"]),
+                            published_time=datetime.fromtimestamp(mktime(result["updated_parsed"])),
+                            journal_link=result["journal_reference"],
+                            tag=" | ".join([x["term"] for x in result["tags"]])
+                        )
+                        session.add(new_paper)
+                session.commit()
+                time.sleep(3)
