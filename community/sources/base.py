@@ -8,6 +8,12 @@ class Source(object):
 
     __metaclass__ = ABCMeta
 
+    def get_posts(self, keyword=None, start=0, num=100):
+        """
+        Get recent posts.
+        """
+        return []
+
     @abstractmethod
     def fetch_new(self):
         """

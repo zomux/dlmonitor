@@ -1,4 +1,4 @@
-# deepcommunity
+# Deep Community: All things happening in deep learning
 
 ### Install
 
@@ -18,3 +18,11 @@ DATABASE_PASSWD=pass
 2. Create database
 
 Run `python bin/create_db.py`
+
+### Fetch resources
+
+Arxiv papers:
+
+```bash
+python bin/fetch_new_sources.py arxiv
+```

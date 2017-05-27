@@ -11,7 +11,17 @@ def create_engine(**kwargs):
 if 'Session' not in globals():
     engine = create_engine()
     Session = sessionmaker(bind=engine)
-    Base.metadata.create_all(engine)
+
+def get_global_session():
+    global global_session
+    if 'global_session' not in globals() or global_session is None:
+        global_session = Session()
+    return global_session
+
+def close_global_session():
+    global global_session
+    global_session.close()
+    global_session = None
 
 @contextmanager
 def session_scope():

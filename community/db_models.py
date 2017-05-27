@@ -24,7 +24,7 @@ class ArxivModel(Base):
     published_time = Column(DateTime())
     authors = Column(Unicode(800, collation='utf8_general_ci'))
     abstract = Column(Text(collation='utf8_general_ci'))
-    journal_link = Column(String(255), nullable=True)
+    journal_link = Column(Text(collation='utf8_general_ci'), nullable=True)
     tag = Column(String(255))
 
     def __repr__(self):

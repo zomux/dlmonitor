@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <title>Welcome to microblog</title>
+  </head>
+  <body>
+      <h1>Hello, !</h1>
+      {% for post in posts %}
+        <li>{{ post.arxiv_url }} </li>
+        <li>{{ post.title }} </li>
+    {% endfor %}
+  </body>
+</html>
