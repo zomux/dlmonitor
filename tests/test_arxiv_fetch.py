@@ -1,3 +1,7 @@
-import arxiv
+import sys
+sys.path.append(".")
+from community.sources.arxivsrc import ArxivSource
 
-print arxiv.query("cs.CL", prune=True, start=0, max_results=10)
+if __name__ == '__main__':
+    src = ArxivSource()
+    src.fetch_new()
