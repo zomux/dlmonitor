@@ -2,3 +2,5 @@ arxiv
 sqlalchemy == 1.1.10
 python-dotenv == 0.6.4
 flask == 0.12.2
+psycopg2 == 2.7.1
+SQLAlchemy-Searchable == 0.10.3

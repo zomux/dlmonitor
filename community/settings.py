@@ -15,5 +15,5 @@ DATABASE_NAME = os.environ.get('DATABASE_NAME', 'deepcommunity')
 DATABASE_USER = os.environ.get('DATABASE_USER', "user")
 DATABASE_PASSWD = os.environ.get('DATABASE_PASSWD', "pass")
 
-DATABASE_URL = os.environ.get('DATABASE_URL', "mysql://{}:{}@{}/{}?charset=utf8".format(
+DATABASE_URL = os.environ.get('DATABASE_URL', "postgresql://{}:{}@{}/{}".format(
     DATABASE_USER, DATABASE_PASSWD, DATABASE_ADDR, DATABASE_NAME))

@@ -8,7 +8,7 @@ class Source(object):
 
     __metaclass__ = ABCMeta
 
-    def get_posts(self, keyword=None, start=0, num=100):
+    def get_posts(self, keywords=None, start=0, num=100):
         """
         Get recent posts.
         """

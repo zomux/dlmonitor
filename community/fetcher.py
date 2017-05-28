@@ -20,6 +20,6 @@ def fetch_sources(src_name, fetch_all=False):
     else:
         src.fetch_new()
 
-def get_posts(src_name, keyword=None, start=0, num=100):
+def get_posts(src_name, keywords=None, start=0, num=100):
     src = get_source(src_name)
-    return src.get_posts(keyword=keyword, start=start, num=num)
+    return src.get_posts(keywords=keywords, start=start, num=num)

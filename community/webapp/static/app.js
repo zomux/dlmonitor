@@ -30,6 +30,7 @@ community.addKeyword = function() {
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
     community.showKeywords();
+    community.updateAll();
 };
 
 community.removeKeyword = function(e) {
@@ -47,6 +48,7 @@ community.removeKeyword = function(e) {
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
     community.showKeywords();
+    community.updateAll();
 };
 
 community.showKeywords = function() {
@@ -63,8 +65,35 @@ community.showKeywords = function() {
     $("#keywords").html(newHtml);
 };
 
+community.fetch = function(src_name, start=0) {
+    $("#posts-" + src_name).html(
+        "<div style='text-align:center;'>"+
+        "<img src='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif'/>"+
+        "</div>");
+    $.ajax({
+       url: '/fetch',
+       type: 'POST',
+       data: {
+          src: src_name,
+          start: "" + start
+       },
+       error: function() {
+          alert("error");
+       },
+       success: function(data) {
+          // console.log(data);
+          $("#posts-" + src_name).html(data);
+       }
+    });
+};
+
+community.updateAll = function() {
+    community.fetch("arxiv");
+}
+
 community.init = function() {
     community.showKeywords();
+    community.updateAll();
     $("#new-keyword-btn").click(community.addKeyword);
     $('#new-keyword').keypress(function (e) {
      var key = e.which;

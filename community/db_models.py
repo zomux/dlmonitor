@@ -2,9 +2,12 @@ import sys
 from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime, Unicode
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy_searchable import make_searchable
+from sqlalchemy_utils.types import TSVectorType
 
 if 'Base' not in globals():
     Base = declarative_base()
+    make_searchable()
 
 def str_repr(string):
     if sys.version_info.major == 3:
@@ -18,14 +21,18 @@ class ArxivModel(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     version = Column(Integer)
-    title = Column(Unicode(800, collation='utf8_general_ci'))
+    title = Column(Unicode(800, collation=''))
     arxiv_url = Column(String(255), primary_key=True)
     pdf_url = Column(String(255))
     published_time = Column(DateTime())
-    authors = Column(Unicode(800, collation='utf8_general_ci'))
-    abstract = Column(Text(collation='utf8_general_ci'))
-    journal_link = Column(Text(collation='utf8_general_ci'), nullable=True)
+    authors = Column(Unicode(800, collation=''))
+    abstract = Column(Text(collation=''))
+    journal_link = Column(Text(collation=''), nullable=True)
     tag = Column(String(255))
+
+    # For full text search
+    search_vector = Column(
+        TSVectorType('title', 'abstract', weights={'title': 'A', 'abstract': 'B'}))
 
     def __repr__(self):
         template = '<Arxiv(id="{0}", url="{1}")>'

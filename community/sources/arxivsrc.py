@@ -2,6 +2,7 @@ import os, sys
 from ..db import create_engine
 from base import Source
 from arxiv import mod_query_result, prune_query_result
+from sqlalchemy_searchable import search
 import feedparser
 import time
 from time import mktime
@@ -37,10 +38,16 @@ class ArxivSource(Source):
             version = int(last_part.split("v")[-1])
         return version
 
-    def get_posts(self, keyword=None, start=0, num=20):
+    def get_posts(self, keywords=None, start=0, num=20):
         from ..db import get_global_session, ArxivModel
         session = get_global_session()
-        results = session.query(ArxivModel).offset(start).limit(num).all()
+        if not keywords:
+            results = session.query(ArxivModel).offset(start).limit(num).all()
+        else:
+            search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
+            query = session.query(ArxivModel)
+            searched_query = search(query, search_kw, sort=True)
+            results = searched_query.offset(start).limit(num).all()
         return results
 
     def fetch_new(self):

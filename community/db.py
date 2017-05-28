@@ -2,6 +2,7 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
+
 from . import settings
 from db_models import Base, ArxivModel
 
@@ -10,6 +11,7 @@ def create_engine(**kwargs):
 
 if 'Session' not in globals():
     engine = create_engine()
+    sqlalchemy.orm.configure_mappers()
     Session = sessionmaker(bind=engine)
 
 def get_global_session():

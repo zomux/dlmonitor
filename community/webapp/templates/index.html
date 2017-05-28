@@ -55,21 +55,8 @@
               <div class="panel-heading">
                 <h3 class="panel-title">Arxiv</h3>
               </div>
-              <div class="panel-body">
-                  {% for post in posts %}
-                  <div class="post">
-                      <div class="title">{{ post.title }}</div>
-                      <div class="author">{{ post.authors }}</div>
-                      <div class="tools clearfix">
-                          <span class="btns">
-                              <span class="label label-default">{{ post.published_time.strftime('%Y-%m-%d') }}</span>
-                              <button type="button" class="btn btn-info">PDF</button>
-                              <button type="button" class="btn btn-danger">Mendeley</button>
-                          </span>
-                      </div>
-                  </div>
-                  <div class="hrline"></div>
-                  {% endfor %}
+              <div id="posts-arxiv" class="panel-body">
+                    Loading ...
               </div>
             </div>
         </div>
