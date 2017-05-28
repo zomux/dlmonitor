@@ -1,0 +1,429 @@
+
+html, body
+{
+	height: 100%;
+}
+
+
+body
+{
+	margin: 0px;
+	padding: 0px;
+	background: #2b2b2b;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 11pt;
+	font-weight: 300;
+	color: #fff;
+}
+
+h1, h2, h3
+{
+	margin: 0;
+	padding: 0;
+	font-weight: 600;
+	color: #454445;
+}
+
+p, ol, ul
+{
+	margin-top: 0;
+}
+
+ol, ul
+{
+	padding: 0;
+	list-style: none;
+}
+
+p
+{
+	line-height: 180%;
+}
+
+strong
+{
+}
+
+a
+{
+	color: #2C383B;
+}
+
+a:hover
+{
+	text-decoration: none;
+}
+
+.container
+{
+	margin: 0px auto;
+	width: 1200px;
+}
+
+/*********************************************************************************/
+/* List Styles                                                                   */
+/*********************************************************************************/
+
+	ul.style1
+{
+	margin: 0;
+	padding: 0em 0em 0em 0em;
+	overflow: hidden;
+	list-style: none;
+	color: #6c6c6c
+}
+
+ul.style1 li
+{
+	overflow: hidden;
+	display: block;
+	padding: 2.80em 0em;
+	border-top: 1px solid #D1CFCE;
+}
+
+ul.style1 li:first-child
+{
+	padding-top: 0;
+	border-top: none;
+}
+
+ul.style1 .image-left
+{
+	margin-bottom: 0;
+}
+
+ul.style1 h3
+{
+	padding: 1.2em 0em 1em 0em;
+	letter-spacing: 0.10em;
+	text-transform: uppercase;
+	font-size: 1.2em;
+	font-weight: 600;
+	color: #454445;
+}
+
+ul.style1 a
+{
+	text-decoration: none;
+	color: #525252;
+}
+
+ul.style1 a:hover
+{
+	text-decoration: underline;
+	color: #525252;
+}
+
+ul.style2
+{
+	margin: 0;
+	padding-top: 1em;
+	list-style: none;
+}
+
+ul.style2 li
+{
+	border-top: solid 1px #E5E5E5;
+	padding: 0.80em 0 0.80em 0;
+	font-family: 0.80em;
+}
+
+ul.style2 li:before
+{
+	display: inline-block;
+	padding: 4px;
+	background: #DB3256;
+}
+
+ul.style2 a
+{
+	display: inline-block;
+	margin-left: 1em;
+}
+
+ul.style2 li:first-child
+{
+	border-top: 0;
+	padding-top: 0;
+}
+
+ul.style2 .icon
+{
+	color: #FFF;
+}
+
+ul.style3
+{
+	margin: 0;
+	padding-top: 1em;
+	list-style: none;
+}
+
+ul.style3 li
+{
+	border-top: solid 1px rgba(255,255,255,.2);
+	padding: 1em 0 1em 0;
+	font-family: 0.80em;
+}
+
+ul.style3 li:before
+{
+	display: inline-block;
+	padding: 4px;
+
+}
+
+ul.style3 a
+{
+	display: inline-block;
+	margin-left: 1em;
+	font-size: 1em !important;
+	color: #FFF;
+}
+
+ul.style3 li:first-child
+{
+	border-top: 0;
+	padding-top: 0;
+}
+
+ul.style3 .icon
+{
+	color: #DB3256;
+}
+
+/*********************************************************************************/
+/* Social Icon Styles                                                            */
+/*********************************************************************************/
+
+	ul.contact
+{
+	margin: 0;
+	padding: 2em 0em 0em 0em;
+	list-style: none;
+}
+
+ul.contact li
+{
+	display: inline-block;
+	padding: 0em 0.30em;
+	font-size: 1em;
+}
+
+ul.contact li span
+{
+	display: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.contact li a
+{
+	color: #FFF;
+}
+
+ul.contact li a:before
+{
+	display: inline-block;
+	background: #3f3f3f;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 20px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+ul.contact li a.icon-twitter:before
+{
+	background: #2DAAE4;
+}
+
+ul.contact li a.icon-facebook:before
+{
+	background: #39599F;
+}
+
+ul.contact li a.icon-dribbble:before
+{
+	background: #C4376B;
+}
+
+ul.contact li a.icon-tumblr:before
+{
+	background: #31516A;
+}
+
+ul.contact li a.icon-rss:before
+{
+	background: #F2600B;
+}
+
+/*********************************************************************************/
+/* Nav                                                                        */
+/*********************************************************************************/
+
+.keywords {
+	padding: 20px 0;
+	line-height: 32px;
+	overflow-x: auto;
+	left: 20px;
+}
+
+.keywords .label {
+	font-size: 100%;
+	margin: 0 2px;
+}
+
+.keywords .label:hover {
+	background-color: #C62828;
+	cursor: pointer;
+}
+
+/*********************************************************************************/
+/* Posts                                                                        */
+/*********************************************************************************/
+
+.hrline {
+	border-bottom: #666 1px solid;
+}
+
+.post {
+	margin: 5px 0;
+}
+
+.post .title {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.post .author {
+	color: #ccc;
+}
+
+.post .tools {
+	margin-top: 10px;
+}
+
+.post .label {
+	font-size: 100%;
+}
+
+.post .btns {
+	/*float: right;*/
+}
+
+.post .btn {
+	padding: 0;
+}
+
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+#header-wrapper
+{
+	background: #2b2b2b;
+}
+
+#header
+{
+	position: relative;
+	height: 100px;
+}
+
+/*********************************************************************************/
+/* Logo                                                                          */
+/*********************************************************************************/
+
+#logo
+{
+	position: absolute;
+	top: 2em;
+	width: 100%;
+}
+
+#logo h1
+{
+	display: inline-block;
+	font-size: 2.5em;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: #ED7070;
+	padding-right: 0.50em;
+	border-right: 1px solid rgba(0,0,0,.1);
+}
+
+#logo span
+{
+	display: inline-block;
+	padding-right: .50em;
+	letter-spacing: 0.10em;
+	text-transform: uppercase;
+	font-size: 0.90em;
+}
+
+#logo a
+{
+	text-decoration: none;
+	color: #FFF;
+}
+
+#logo .fa
+{
+	color: #1E88E5;
+}
+
+#logo .fa:after
+{
+	position: absolute;
+	display: inline-block;
+	padding-right: 2em;
+}
+
+/*********************************************************************************/
+/* Menu                                                                          */
+/*********************************************************************************/
+
+#menu
+{
+	position: absolute;
+	right: 0;
+	top: 1.6em;
+}
+
+#menu ul
+{
+	display: inline-block;
+}
+
+#menu li
+{
+	display: block;
+	float: left;
+	text-align: center;
+}
+
+#menu li a, #menu li span
+{
+	display: inline-block;
+	margin-left: 1px;
+	padding: 1em 1.5em 1em 1.5em;
+	letter-spacing: 0.10em;
+	text-decoration: none;
+	font-size: 1em;
+	text-transform: uppercase;
+	outline: 0;
+	color: #FFF;
+}
+
+#menu li:hover a, #menu li.active a, #menu li.active span
+{
+}
+
+#menu .current_page_item a
+{
+	background: #1E88E5;
+	border-radius: 30px;
+	color: #FFF;
+}

@@ -1,9 +1,9 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, send_from_directory
 from community.db import close_global_session
 from community.fetcher import get_posts
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
 def index():
