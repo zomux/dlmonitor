@@ -21,6 +21,7 @@ class ArxivModel(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     version = Column(Integer)
+    popularity = Column(Integer)
     title = Column(Unicode(800, collation=''))
     arxiv_url = Column(String(255), primary_key=True)
     pdf_url = Column(String(255))

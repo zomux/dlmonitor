@@ -1,12 +1,12 @@
 {% for post in posts %}
 <div class="post">
-    <div class="title">{{ post.title }}</div>
+    <div class="title"><a href="{{ post.arxiv_url }}" target="_blank">{{ post.title }}</a></div>
     <div class="author">{{ post.authors }}</div>
     <div class="tools clearfix">
         <span class="btns">
             <span class="label label-default">{{ post.published_time.strftime('%Y-%m-%d') }}</span>
-            <button type="button" class="btn btn-info">PDF</button>
-            <button type="button" class="btn btn-danger">Mendeley</button>
+            <button type="button" class="btn btn-info" onclick="window.open('{{ post.pdf_url }}', '_blank');">PDF</button>
+            <button type="button" class="btn btn-danger" onclick="window.open('https://www.mendeley.com/import/?url={{ post.arxiv_url }}', '_blank');">Mendeley</button>
         </span>
     </div>
 </div>

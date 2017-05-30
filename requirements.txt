@@ -4,3 +4,7 @@ python-dotenv == 0.6.4
 flask == 0.12.2
 psycopg2 == 2.7.1
 SQLAlchemy-Searchable == 0.10.3
+python-twitter == 3.3
+praw == 4.5.1
+gunicorn == 19.7.1
+supervisor == 3.3.1

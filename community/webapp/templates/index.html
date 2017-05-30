@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Deep Community - Watching Deep Learning Papers and Information</title>
+<title>Deep Learning Community - Monitoring Deep Learning Papers on Arxiv</title>
 <meta name="keywords" content="deep learning, paper, arxiv, twitter" />
 <meta name="description" content="Things happening in deep learning: arxiv, twitter, reddit" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
@@ -20,7 +20,7 @@
 <div id="header-wrapper">
 	<div id="header" class="container">
 		<div id="logo">
-			<h1><span class="fa fa-coffee"></span><a href="#">Deep Community</a></h1>
+			<h1><span class="fa fa-coffee"></span><a href="#">Deep Learning Community</a></h1>
 		</div>
 		<div id="menu">
 			<ul>
@@ -49,38 +49,35 @@
         </div>
     </nav>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Arxiv</h3>
-              </div>
-              <div id="posts-arxiv" class="panel-body">
-                    Loading ...
-              </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Twitter</h3>
-              </div>
-              <div class="panel-body">
-                Panel content
-              </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Reddit</h3>
-              </div>
-              <div class="panel-body">
-                Panel content
-              </div>
-            </div>
-        </div>
+	<div class="row subtools clearfix">
+		<div class="btn-group">
+		  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span id="date-info">Recent two weeks</span> <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu">
+			<li><a href="javascript:" onclick="community.filterDate('1-week');">Recent one week</a></li>
+			<li><a href="javascript:" onclick="community.filterDate('2-week');">Recent two weeks</a></li>
+			<li><a href="javascript:" onclick="community.filterDate('1-month');">Recent one month</a></li>
+		  </ul>
+		</div>
+	</div>
+
+	<div id="column-template" style="display:none;">
+		<div class="col-md-4 column">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+				<h3 id="column-title-NUM" class="panel-title"></h3>
+			  </div>
+			  <div id="posts-NUM" class="panel-body">
+				  Loading ...
+			  </div>
+			</div>
+		</div>
+	</div>
+    <div class="row post-columns" id="post-columns">
+
     </div>
+
 </div>
 </div>
 <script type="text/javascript" defer="defer">

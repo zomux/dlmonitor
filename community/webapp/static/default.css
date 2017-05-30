@@ -35,6 +35,10 @@ ol, ul
 	list-style: none;
 }
 
+a {
+    color: #fff;
+}
+
 p
 {
 	line-height: 180%;
@@ -44,10 +48,6 @@ strong
 {
 }
 
-a
-{
-	color: #2C383B;
-}
 
 a:hover
 {
@@ -192,6 +192,7 @@ ul.style3 .icon
 	color: #DB3256;
 }
 
+
 /*********************************************************************************/
 /* Social Icon Styles                                                            */
 /*********************************************************************************/
@@ -280,6 +281,15 @@ ul.contact li a.icon-rss:before
 	cursor: pointer;
 }
 
+.subtools {
+    margin: -10px 0 10px 0;
+    width: 100%;
+}
+
+.subtools .btn-group {
+    float: right;
+}
+
 /*********************************************************************************/
 /* Posts                                                                        */
 /*********************************************************************************/
@@ -296,6 +306,7 @@ ul.contact li a.icon-rss:before
 	font-size: 18px;
 	font-weight: 500;
 }
+
 
 .post .author {
 	color: #ccc;

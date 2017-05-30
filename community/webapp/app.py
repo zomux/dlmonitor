@@ -3,10 +3,29 @@ from flask import render_template, send_from_directory
 from community.db import close_global_session
 from community.fetcher import get_posts
 from urllib2 import unquote
+import datetime as DT
 
 app = Flask(__name__, static_url_path='/static')
 
 NUMBER_EACH_PAGE = 20
+
+DATE_TOKEN_SET = set(['1-week', '2-week', '1-month'])
+
+def get_date_str(token):
+    """
+    Convert token to date string.
+    For example, '1-week' ---> '2017-04-03'.
+    """
+    today = DT.date.today()
+    if token not in DATE_TOKEN_SET:
+        token = '2-week'
+    if token == '1-week':
+        target_date = today - DT.timedelta(days=7)
+    elif token == '2-week':
+        target_date = today - DT.timedelta(days=14)
+    else:
+        target_date = today - DT.timedelta(days=31)
+    return target_date.strftime("%Y-%m-%d")
 
 @app.route('/')
 def index():
@@ -16,21 +35,23 @@ def index():
 @app.route('/fetch', methods=['POST'])
 def fetch():
     # Get keywords
-    kw = request.cookies.get('keywords')
+    kw = request.form.get('keyword')
     if kw is not None:
         kw = unquote(kw)
     # Get parameters
     src = request.form.get("src")
     start = request.form.get("start")
     if src is None or start is None:
-        # Error
+        # Error if 'src' or 'start' parameter is not found
         return ""
     assert "." not in src  # Just for security
     start = int(start)
+    # Get target date string
+    target_date = get_date_str(request.cookies.get('datetoken'))
 
     return render_template(
         "post_{}.html".format(src),
-        posts=get_posts(src, keywords=kw, start=start, num=NUMBER_EACH_PAGE))
+        posts=get_posts(src, keywords=kw, since=target_date, start=start, num=NUMBER_EACH_PAGE))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

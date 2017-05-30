@@ -38,14 +38,19 @@ class ArxivSource(Source):
             version = int(last_part.split("v")[-1])
         return version
 
-    def get_posts(self, keywords=None, start=0, num=20):
+    def get_posts(self, keywords=None, since=None, start=0, num=20):
         from ..db import get_global_session, ArxivModel
         session = get_global_session()
+        query = session.query(ArxivModel)
+        if since:
+            # Filter date
+            assert isinstance(since, str)
+            query = query.filter(ArxivModel.published_time >= since)
         if not keywords:
-            results = session.query(ArxivModel).offset(start).limit(num).all()
+            results = query.offset(start).limit(num).all()
         else:
-            search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
-            query = session.query(ArxivModel)
+            # search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
+            search_kw = " or ".join(keywords.split(","))
             searched_query = search(query, search_kw, sort=True)
             results = searched_query.offset(start).limit(num).all()
         return results
