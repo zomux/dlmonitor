@@ -3,6 +3,7 @@ from ..db import create_engine
 from base import Source
 from arxiv import mod_query_result, prune_query_result
 from sqlalchemy_searchable import search
+from sqlalchemy import desc
 import feedparser
 import time
 from time import mktime
@@ -46,8 +47,12 @@ class ArxivSource(Source):
             # Filter date
             assert isinstance(since, str)
             query = query.filter(ArxivModel.published_time >= since)
-        if not keywords:
+        if not keywords or keywords.lower() == 'new papers':
+            # Recent papers
             results = query.offset(start).limit(num).all()
+        elif keywords.lower() == 'hot papers':
+            results = (query.order_by(desc(ArxivModel.popularity))
+                              .offset(start).limit(num).all())
         else:
             # search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
             search_kw = " or ".join(keywords.split(","))
