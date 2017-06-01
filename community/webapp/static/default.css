@@ -320,6 +320,11 @@ ul.contact li a.icon-rss:before
 	font-size: 100%;
 }
 
+.post .label-hot {
+	background: #FF6D00;
+	font-weight: normal;
+}
+
 .post .btns {
 	/*float: right;*/
 }

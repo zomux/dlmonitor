@@ -7,6 +7,11 @@
             <span class="label label-default">{{ post.published_time.strftime('%Y-%m-%d') }}</span>
             <button type="button" class="btn btn-info" onclick="window.open('{{ post.pdf_url }}', '_blank');">PDF</button>
             <button type="button" class="btn btn-danger" onclick="window.open('https://www.mendeley.com/import/?url={{ post.arxiv_url }}', '_blank');">Mendeley</button>
+            {% if post.popularity > 50 %}
+            <span class="label label-hot">Super Hot</span>
+            {% elif post.popularity > 3 %}
+            <span class="label label-hot">Hot</span>
+            {% endif %}
         </span>
     </div>
 </div>
