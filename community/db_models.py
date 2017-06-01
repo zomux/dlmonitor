@@ -33,8 +33,27 @@ class ArxivModel(Base):
 
     # For full text search
     search_vector = Column(
-        TSVectorType('title', 'abstract', weights={'title': 'A', 'abstract': 'B'}))
+        TSVectorType('title', 'abstract', 'authors', weights={'title': 'A', 'abstract': 'B', 'authors': 'C'}))
 
     def __repr__(self):
         template = '<Arxiv(id="{0}", url="{1}")>'
         return str_repr(template.format(self.id, self.arxiv_url))
+
+class TwitterModel(Base):
+
+    __tablename__ = 'twitter'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tweet_id = Column(String(20), primary_key=True)
+    popularity = Column(Integer)
+    pic_url = Column(String(255), nullable=True)
+    published_time = Column(DateTime())
+    user = Column(Unicode(255))
+    text = Column(Text())
+
+    # For full text search
+    search_vector = Column(TSVectorType('text'))
+
+    def __repr__(self):
+        template = '<Arxiv(id="{0}", user_name="{1}")>'
+        return str_repr(template.format(self.id, self.user))

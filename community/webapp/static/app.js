@@ -2,12 +2,17 @@
 Javascript for Deep Community.
 */
 
+INIT_KEYWORDS = "attention mechanism,reinforce sequence,adversarial training";
+
 community = {
     ajaxCount: 0
 };
 
 community.getKeywords = function() {
     var keywords = Cookies.get('keywords');
+    if (Cookies.get('keywords') == undefined) {
+        keywords = INIT_KEYWORDS;
+    }
     if (!keywords) {
         var kwList = [];
     } else {
@@ -19,6 +24,9 @@ community.getKeywords = function() {
 // This requires js-cookie
 community.addKeyword = function() {
     var w = $("#new-keyword").val()
+    if (w.length == 0) {
+        return;
+    }
     if (w.includes(",")) {
         alert("Keyword can not include comma.");
         return;
@@ -66,7 +74,7 @@ community.fetch = function(src_name, keyword, index, start=0) {
     console.log("fetch", src_name, keyword, index, start);
     $("#posts-" + index).html(
         "<div style='text-align:center;'>"+
-        "<img src='http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif'/>"+
+        "<img src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif'/>"+
         "</div>");
     community.ajaxCount ++;
     $.ajax({
