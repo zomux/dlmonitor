@@ -66,9 +66,11 @@ class ArxivSource(Source):
             for i in range(0, MAX_QUERY_NUM, 100):
                 logging.info("get paper starting from {}".format(i))
                 results = query_arxiv(start=i)
+                anything_new = False
                 for result in results:
                     arxiv_url = result["arxiv_url"]
                     if session.query(ArxivModel).filter_by(arxiv_url=arxiv_url).count() == 0:
+                        anything_new = True
                         new_paper = ArxivModel(
                             arxiv_url=arxiv_url,
                             version=self._get_version(arxiv_url),
@@ -83,4 +85,6 @@ class ArxivSource(Source):
                         )
                         session.add(new_paper)
                 session.commit()
+                if not anything_new:
+                    break
                 time.sleep(3)
