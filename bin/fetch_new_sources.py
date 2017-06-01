@@ -10,4 +10,9 @@ if __name__ == '__main__':
     ap.add_argument("src", help="source name: arxiv, twitter, youtube, reddit")
     args = ap.parse_args()
 
-    fetch_sources(args.src)
+    if args.src == "all":
+        # Okay, you want to get all things
+        fetch_sources("arxiv")
+        fetch_sources("twitter")
+    else:
+        fetch_sources(args.src)

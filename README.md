@@ -10,9 +10,15 @@
 1. Create a `.env` file in the project root.
 
 ```
-DATABASE_NAME=deepcommunity
-DATABASE_USER=user
-DATABASE_PASSWD=pass
+DATABASE_USER=deepcommunity
+DATABASE_PASSWD=something
+
+TWITTER_CONSUMER_KEY=something
+TWITTER_CONSUMER_SECRET=something
+TWITTER_ACCESS_TOKEN=something
+TWITTER_ACCESS_SECRET=something
+
+SUPERVISORD_PASSWD=something
 ```
 
 2. Create database
@@ -21,15 +27,17 @@ Run `bash bin/create_db.sh`
 
 ### Fetch resources
 
-Fetch Arxiv papers:
+Fetch Arxiv papers and tweets.
 
 ```bash
-python bin/fetch_new_sources.py arxiv
+python bin/fetch_new_sources.py all
 ```
 
 ### Setup web server
 
-1. Copy configuration files for supervisord and nignx
+1. Install nginx
+
+2. Copy configuration files for supervisord and nignx
 
 ```bash
 bash bin/config_server.sh
