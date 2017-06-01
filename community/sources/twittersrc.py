@@ -29,6 +29,14 @@ class TwitterSource(Source):
             results = searched_query.offset(start).limit(num).all()
         return results
 
+    def _extract_arxiv_url(self, url):
+        arxiv_url = url.replace("/pdf/", "/abs/")
+        arxiv_url = arxiv_url.replace(".pdf", "")
+        arxiv_url = arxiv_url.replace("https:", "http:")
+        if "v" not in arxiv_url.split("/")[-1]:
+            arxiv_url += "v1"
+        return arxiv_url
+
     def fetch_new(self):
         from ..db import session_scope, TwitterModel, ArxivModel
         tw = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY, consumer_secret=TWITTER_CONSUMER_SECRET,
@@ -63,17 +71,23 @@ class TwitterSource(Source):
                         # Update arxiv paper popularity
                         for url in post.urls:
                             if "arxiv.org" in url.expanded_url:
-                                arxiv_url = url.expanded_url.replace("/pdf/", "/abs/")
-                                arxiv_url = arxiv_url.replace(".pdf", "")
-                                arxiv_url = arxiv_url.replace("https:", "http:")
-                                if "v" not in arxiv_url.split("/")[-1]:
-                                    arxiv_url += "v1"
+                                arxiv_url = self._extract_arxiv_url(url.expanded_url)
                                 affected_count = session.query(ArxivModel).filter_by(arxiv_url=arxiv_url).update(
-                                    {"popularity": ArxivModel.popularity + 1})
+                                    {"popularity": ArxivModel.popularity + 1 + post.favorite_count})
                                 if affected_count == 0:
                                     print ("[WARN] Paper is not found: {}".format(arxiv_url))
                     else:
-                        # TODO: Update popularity of this tweet
-                        pass
+                        # Update popularity of this tweet and related arxiv post
+                        tweet = session.query(TwitterModel).filter_by(tweet_id=tweet_id).first()
+                        if tweet is not None:
+                            if post.favorite_count > tweet.popularity:
+                                tweet.popularity = post.favorite_count
+                                for url in post.urls:
+                                    if "arxiv.org" in url.expanded_url:
+                                        arxiv_url = self._extract_arxiv_url(url.expanded_url)
+                                        print ("Update popularity of {}".format(arxiv_url))
+                                        paper = session.query(ArxivModel).filter_by(arxiv_url=arxiv_url).first()
+                                        if paper:
+                                            paper.popularity += post.favorite_count - tweet.popularity
                 session.commit()
                 time.sleep(1)

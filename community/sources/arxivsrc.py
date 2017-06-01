@@ -73,7 +73,8 @@ class ArxivSource(Source):
                             authors=", ".join(result["authors"])[:800],
                             published_time=datetime.fromtimestamp(mktime(result["updated_parsed"])),
                             journal_link=result["journal_reference"],
-                            tag=" | ".join([x["term"] for x in result["tags"]])
+                            tag=" | ".join([x["term"] for x in result["tags"]]),
+                            popularity=0
                         )
                         session.add(new_paper)
                 session.commit()

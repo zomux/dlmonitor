@@ -8,7 +8,7 @@ tw = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY, consumer_secret=TWITTER_CONS
 # print 'q=%22Pre-Translation for Neural Machine Translation%22'
 # print tw.GetSearch(term='#deeplearning', result_type = 'mixed', count=200)
 # tw.GetUserTimeline(screen_name="deeplearninghub", count=200):
-for post in tw.GetSearch(term='#deeplearning', result_type = 'mixed', count=200):
+for post in tw.GetSearch(term='arxiv.org', result_type = 'mixed', count=200):
     print post.user.screen_name
     print post.created_at
     print post.id_str
