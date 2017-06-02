@@ -16,3 +16,17 @@ arxiv.org
 @nsaphra
 @jmgomez
 @raphaelshu
+@yoavgo
+@goodfellow_ian
+@southmithchintala
+@mxlearn
+@googleresearch
+@demishassabis
+@GoogleBrain
+@OpenAI
+@ilyasut
+@sedielem
+@karpathy
+@fchollet
+@hugo_larochelle
+@OriolVinyalsML

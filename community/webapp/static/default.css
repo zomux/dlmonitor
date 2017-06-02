@@ -294,6 +294,98 @@ ul.contact li a.icon-rss:before
 /* Posts                                                                        */
 /*********************************************************************************/
 
+
+
+#keywords::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+}
+
+#keywords::-webkit-scrollbar
+{
+	width: 10px;
+}
+
+#keywords::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	/*background-color: #F5F5F5;*/
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	/*background-color: #F5F5F5;*/
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+
+#header-wrapper {
+	z-index: 999;
+}
+
+.navbar {
+	z-index: 999;
+}
+
+.post-columns-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding-top: 250px;
+}
+
+.post-columns-frame {
+	width: 100%;
+	height: 100%;
+	overflow-y: hidden;
+	overflow-x: auto;
+}
+
+.post-columns {
+	width: 4000px;
+	height: 100%;
+}
+
+
+.post-columns .column {
+	width: 330px;
+	padding: 0 3px;
+	height: 100%;
+}
+
+.post-columns .panel {
+	height: 100%;
+}
+
+
+.post-columns .panel-body {
+	overflow-y: auto;
+	height: inherit;
+}
+
 .hrline {
 	border-bottom: #666 1px solid;
 }

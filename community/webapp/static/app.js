@@ -93,7 +93,6 @@ community.fetch = function(src_name, keyword, index, start=0) {
           // console.log(data);
           community.ajaxCount --;
           $("#posts-" + index).html(data);
-          community.fixFloat();
        }
     });
 };
@@ -146,6 +145,7 @@ community.placeColumns = function() {
     }
 };
 
+// Deprecated
 community.fixFloat = function() {
     if (community.ajaxCount != 0) return;
     var threshold = $("#post-columns").position().left + 1200 / 2;
