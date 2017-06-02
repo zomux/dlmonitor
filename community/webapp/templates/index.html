@@ -8,12 +8,12 @@
 <meta name="description" content="Things happening in deep learning: arxiv, twitter, reddit" />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
-<link href="/static/default.css?v=3" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/default.css?v=7" rel="stylesheet" type="text/css" media="all" />
 <link href="/static/fonts.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=3"></script>
+<script type="text/javascript" src="/static/app.js?v=5"></script>
 
 </head>
 <body>
@@ -43,24 +43,21 @@
                   <input type="text" id="new-keyword" class="form-control" placeholder="keywords">
                   <span class="input-group-btn">
                     <button id="new-keyword-btn" class="btn btn-default" type="button">Add Keyword</button>
+					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  						<span id="date-info">Recent two weeks</span> <span class="caret"></span>
+	  				  </button>
+	  				  <ul class="dropdown-menu">
+	  					<li><a href="javascript:" onclick="community.filterDate('1-week');">Recent one week</a></li>
+	  					<li><a href="javascript:" onclick="community.filterDate('2-week');">Recent two weeks</a></li>
+	  					<li><a href="javascript:" onclick="community.filterDate('1-month');">Recent one month</a></li>
+	  				  </ul>
+	  				</div>
                   </span>
                 </div><!-- /input-group -->
             </div>
+
         </div>
     </nav>
-
-	<div class="row subtools clearfix">
-		<div class="btn-group">
-		  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<span id="date-info">Recent two weeks</span> <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu">
-			<li><a href="javascript:" onclick="community.filterDate('1-week');">Recent one week</a></li>
-			<li><a href="javascript:" onclick="community.filterDate('2-week');">Recent two weeks</a></li>
-			<li><a href="javascript:" onclick="community.filterDate('1-month');">Recent one month</a></li>
-		  </ul>
-		</div>
-	</div>
 
 	<div id="column-template" style="display:none;">
 		<div class="column">

@@ -294,7 +294,11 @@ ul.contact li a.icon-rss:before
 /* Posts                                                                        */
 /*********************************************************************************/
 
-
+#wrapper {
+	width: 100%;
+	padding: 0 2px;
+	overflow-x: hidden;
+}
 
 #keywords::-webkit-scrollbar-track
 {
@@ -339,11 +343,7 @@ ul.contact li a.icon-rss:before
 }
 
 
-#header-wrapper {
-	z-index: 999;
-}
-
-.navbar {
+#header-wrapper, .navbar, .subtools{
 	z-index: 999;
 }
 
@@ -354,7 +354,7 @@ ul.contact li a.icon-rss:before
 	display: block;
 	width: 100%;
 	height: 100%;
-	padding-top: 250px;
+	padding-top: 180px;
 }
 
 .post-columns-frame {
