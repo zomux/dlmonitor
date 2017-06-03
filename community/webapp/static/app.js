@@ -2,7 +2,7 @@
 Javascript for Deep Community.
 */
 
-INIT_KEYWORDS = "attention mechanism,reinforce sequence,adversarial training";
+INIT_KEYWORDS = "hot papers,reinforce learning,adversarial training";
 
 community = {
     ajaxCount: 0
@@ -44,12 +44,15 @@ community.addKeyword = function() {
     kwList.push(w.trim());
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
-    community.showKeywords();
+    // community.showKeywords();
     community.updateAll();
 };
 
 community.removeKeyword = function(e) {
-    var w = $(e).html()
+    var w = $(e).data('keyword');
+    if (w == undefined) {
+        return;
+    }
     var kwList = community.getKeywords();
     var index = kwList.indexOf(w);
     if (index > -1) {
@@ -61,6 +64,7 @@ community.removeKeyword = function(e) {
     community.updateAll();
 };
 
+// Deprecated
 community.showKeywords = function() {
     var newHtml = "";
     var kwList = community.getKeywords();
@@ -134,7 +138,7 @@ community.placeColumns = function() {
         var newHtml = "";
         var template = $("#column-template").html()
         for (var i = 0; i < kwList.length; ++i) {
-            newHtml += template.replace("NUM", "" + i).replace("NUM", "" + i);
+            newHtml += template.replace("NUM", "" + i).replace("NUM", "" + i).replace("NUM", "" + i);
         }
         $("#post-columns").html(newHtml);
     }
@@ -142,6 +146,7 @@ community.placeColumns = function() {
     $(".post-columns .column").css("float", "left");
     for (var i = 0; i < kwList.length; ++i) {
         $("#column-title-" + i).html(kwList[i]);
+        $("#close-btn-" + i).data("keyword", kwList[i])
     }
 };
 
@@ -166,7 +171,6 @@ community.updateAll = function() {
 };
 
 community.init = function() {
-    community.showKeywords();
     community.updateAll();
     $("#new-keyword-btn").click(community.addKeyword);
     $('#new-keyword').keypress(function (e) {

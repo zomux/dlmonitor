@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
 <link href="/static/default.css?v=7" rel="stylesheet" type="text/css" media="all" />
-<link href="/static/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<script src="https://use.fontawesome.com/f194410606.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
@@ -17,7 +17,8 @@
 
 </head>
 <body>
-<div id="header-wrapper">
+<!-- Deprecated element -->
+<!-- <div id="header-wrapper">
 	<div id="header" class="container">
 		<div id="logo">
 			<h1><span class="fa fa-coffee"></span><a href="#">Deep Learning Community</a></h1>
@@ -30,15 +31,16 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <div id="wrapper" class="container">
 
     <nav class="navbar navbar-default">
         <div class="row">
-            <div id="keywords" class="col-md-8 keywords">
+            <div class="col-md-6 logo">
+				<h1><a href="/">Deep Learning Community</a></h1>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="input-group" style="margin: 12px;">
                   <input type="text" id="new-keyword" class="form-control" placeholder="keywords">
                   <span class="input-group-btn">
@@ -62,8 +64,11 @@
 	<div id="column-template" style="display:none;">
 		<div class="column">
 			<div class="panel panel-default">
-			  <div class="panel-heading">
+			  <div class="panel-heading clearfix">
 				<h3 id="column-title-NUM" class="panel-title"></h3>
+				<span id="close-btn-NUM" class="close-btn label" onclick="community.removeKeyword(this);">
+					<span class="fa fa-close"></span>
+				</span>
 			  </div>
 			  <div id="posts-NUM" class="panel-body">
 				  Loading ...
