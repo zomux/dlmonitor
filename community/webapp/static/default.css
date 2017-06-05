@@ -297,11 +297,19 @@ ul.contact li a.icon-rss:before
 #wrapper {
 	width: 100%;
 	padding: 0;
-	overflow-x: hidden;
+	overflow: visible;
 }
 
-navbar {
+.navbar {
 	border-radius: 0;
+}
+
+nav .row {
+	margin: 0;
+}
+
+.dummy-navbar {
+	height: 70px;
 }
 
 #keywords::-webkit-scrollbar-track
