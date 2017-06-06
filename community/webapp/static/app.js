@@ -2,7 +2,7 @@
 Javascript for Deep Community.
 */
 
-INIT_KEYWORDS = "Hot Tweets, Fresh Tweets, Hot Papers, Fresh Papers";
+INIT_KEYWORDS = "Hot Tweets,Fresh Tweets,Hot Papers,Fresh Papers";
 
 community = {
     ajaxCount: 0

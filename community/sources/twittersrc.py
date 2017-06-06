@@ -17,6 +17,8 @@ class TwitterSource(Source):
 
     def get_posts(self, keywords=None, since=None, start=0, num=30):
         from ..db import get_global_session, TwitterModel
+        if keywords:
+            keywords = keywords.strip()
         session = get_global_session()
         query = session.query(TwitterModel)
         if since:

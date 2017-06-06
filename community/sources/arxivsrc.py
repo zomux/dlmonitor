@@ -41,6 +41,8 @@ class ArxivSource(Source):
 
     def get_posts(self, keywords=None, since=None, start=0, num=20):
         from ..db import get_global_session, ArxivModel
+        if keywords:
+            keywords = keywords.strip()
         session = get_global_session()
         query = session.query(ArxivModel)
         if since:
