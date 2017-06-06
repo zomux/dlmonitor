@@ -1,0 +1,19 @@
+{% for post in posts %}
+<div class="twittersrc post">
+    <div class="title"><a href="https://twitter.com/{{ post.user }}" target="_blank">@{{ post.user }}</a></div>
+    <div class="author">{{ post.href_text | safe }}</div>
+    <div class="tools clearfix">
+        <span class="btns">
+            <span class="label label-default">{{ post.published_time.strftime('%Y-%m-%d') }}</span>
+            <button type="button" class="btn btn-info" onclick="window.open('https://twitter.com/intent/retweet?tweet_id={{ post.tweet_id }}', '_blank');">Retweet</button>
+            <button type="button" class="btn btn-success" onclick="window.open('https://twitter.com/intent/like?tweet_id={{ post.tweet_id }}', '_blank');">Like</button>
+            {% if post.popularity > 500 %}
+            <span class="label label-hot">Super Hot</span>
+            {% elif post.popularity > 100 %}
+            <span class="label label-hot">Hot</span>
+            {% endif %}
+        </span>
+    </div>
+</div>
+<div class="hrline"></div>
+{% endfor %}

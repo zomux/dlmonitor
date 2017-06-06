@@ -1,32 +1,47 @@
 import os, sys
+import re
 from base import Source
 from sqlalchemy_searchable import search
+from sqlalchemy import desc
 from ..settings import PROJECT_ROOT, TWITTER_ACCESS_TOKEN, TWITTER_CONSUMER_KEY, TWITTER_ACCESS_SECRET, TWITTER_CONSUMER_SECRET
 import time
 from time import mktime
 from datetime import datetime
 import logging
 import twitter
+from six.moves.html_parser import HTMLParser
 
 TW_DATA_PATH = "{}/data/twitter_watching_list.txt".format(PROJECT_ROOT)
 
 class TwitterSource(Source):
 
-    def get_posts(self, keywords=None, since=None, start=0, num=20):
+    def get_posts(self, keywords=None, since=None, start=0, num=30):
         from ..db import get_global_session, TwitterModel
         session = get_global_session()
-        query = session.query(ArxivModel)
+        query = session.query(TwitterModel)
         if since:
             # Filter date
             assert isinstance(since, str)
-            query = query.filter(ArxivModel.published_time >= since)
-        if not keywords:
-            results = query.offset(start).limit(num).all()
+            query = query.filter(TwitterModel.published_time >= since)
+        if not keywords or keywords.lower() == 'fresh tweets':
+            # Recent papers
+            results = (query.order_by(desc(TwitterModel.published_time))
+                       .offset(start).limit(num).all())
+        elif keywords.lower() == 'hot tweets':
+            results = (query.order_by(desc(TwitterModel.popularity))
+                              .offset(start).limit(num).all())
         else:
-            # search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
             search_kw = " or ".join(keywords.split(","))
             searched_query = search(query, search_kw, sort=True)
             results = searched_query.offset(start).limit(num).all()
+
+        # Unescape HTML
+        parser = HTMLParser()
+        for result in results:
+            matches = re.findall(r"(https://t\.co/[^ .]{10})", result.text)
+            result.href_text = result.text
+            for match in matches:
+                result.href_text = result.href_text.replace(match, '<a href="{}">{}</a>'.format(match, match))
         return results
 
     def _extract_arxiv_url(self, url):

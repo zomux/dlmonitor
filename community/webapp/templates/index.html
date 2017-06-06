@@ -8,12 +8,12 @@
 <meta name="description" content="Things happening in deep learning: arxiv, twitter, reddit" />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
-<link href="/static/default.css?v=8" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/default.css?v=10" rel="stylesheet" type="text/css" media="all" />
 <script src="https://use.fontawesome.com/f194410606.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=6"></script>
+<script type="text/javascript" src="/static/app.js?v=8"></script>
 
 </head>
 <body>
@@ -42,8 +42,15 @@
                 <div>
                     &nbsp;
                     <span class="fa fa-angle-right"></span>&nbsp;&nbsp;
-                    <a href="/">Full-text Search</a> &nbsp;&nbsp;
+                    <a href="/">Full-text Search</a> &nbsp; | &nbsp;
                     <a href="/">About</a> &nbsp;&nbsp;
+                    <span style="color:#ccc;"><span class="fa fa-angle-right"></span>&nbsp;
+                     Speical Keywords: </span>
+                    <a href="javascript:" onclick="community.addKeyword('Hot Papers');">Hot Papers</a>
+                    &nbsp; | &nbsp;
+                    <a href="javascript:" onclick="community.addKeyword('Fresh Papers');">Fresh Papers</a>
+                    &nbsp; | &nbsp;
+                    <a href="javascript:" onclick="community.addKeyword('Hot Tweets');">Hot Tweets</a>
                 </div>
             </div>
             <div class="col-md-6">

@@ -18,7 +18,7 @@ arxiv.org
 @raphaelshu
 @yoavgo
 @goodfellow_ian
-@southmithchintala
+@soumithchintala
 @mxlearn
 @googleresearch
 @demishassabis

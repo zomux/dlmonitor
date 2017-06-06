@@ -7,7 +7,7 @@ import datetime as DT
 
 app = Flask(__name__, static_url_path='/static')
 
-NUMBER_EACH_PAGE = 20
+NUMBER_EACH_PAGE = 30
 
 DATE_TOKEN_SET = set(['1-week', '2-week', '1-month'])
 
@@ -49,9 +49,11 @@ def fetch():
     # Get target date string
     target_date = get_date_str(request.cookies.get('datetoken'))
 
+    num_page = 80 if src == "twitter" else NUMBER_EACH_PAGE
+
     return render_template(
         "post_{}.html".format(src),
-        posts=get_posts(src, keywords=kw, since=target_date, start=start, num=NUMBER_EACH_PAGE))
+        posts=get_posts(src, keywords=kw, since=target_date, start=start, num=num_page))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

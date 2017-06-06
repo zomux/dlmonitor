@@ -2,7 +2,7 @@
 Javascript for Deep Community.
 */
 
-INIT_KEYWORDS = "hot papers,reinforce learning,adversarial training";
+INIT_KEYWORDS = "Hot Tweets, Fresh Tweets, Hot Papers, Fresh Papers";
 
 community = {
     ajaxCount: 0
@@ -22,8 +22,10 @@ community.getKeywords = function() {
 };
 
 // This requires js-cookie
-community.addKeyword = function() {
-    var w = $("#new-keyword").val()
+community.addKeyword = function(w) {
+    if (w == undefined || typeof(w) == "object" || !w) {
+        w = $("#new-keyword").val()
+    }
     if (w.length == 0) {
         return;
     }
@@ -166,7 +168,12 @@ community.updateAll = function() {
     community.placeColumns();
     var kwList = community.getKeywords();
     for (var i = 0; i < kwList.length; ++i) {
-        community.fetch('arxiv', kwList[i], i, start=0);
+        if (kwList[i].toLowerCase().includes("tweets")) {
+            var src = 'twitter';
+        } else {
+            var src = 'arxiv';
+        }
+        community.fetch(src, kwList[i], i, start=0);
     }
 };
 

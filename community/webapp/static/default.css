@@ -457,6 +457,24 @@ nav .row {
 	padding: 0;
 }
 
+.twittersrc .title a {
+	color: #ccc;
+	font-size: 16px;
+}
+
+.twittersrc .author {
+	font-size: 16px;
+	color: #fff;
+}
+
+.twittersrc .author a {
+	color: #0ce3ac;
+}
+
+.column .panel-body {
+	padding: 5px 15px;
+}
+
 /*********************************************************************************/
 /* Header                                                                        */
 /*********************************************************************************/

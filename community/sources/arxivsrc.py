@@ -47,9 +47,10 @@ class ArxivSource(Source):
             # Filter date
             assert isinstance(since, str)
             query = query.filter(ArxivModel.published_time >= since)
-        if not keywords or keywords.lower() == 'new papers':
+        if not keywords or keywords.lower() == 'fresh papers':
             # Recent papers
-            results = query.offset(start).limit(num).all()
+            results = (query.order_by(desc(ArxivModel.published_time))
+                       .offset(start).limit(num).all())
         elif keywords.lower() == 'hot papers':
             results = (query.order_by(desc(ArxivModel.popularity))
                               .offset(start).limit(num).all())
