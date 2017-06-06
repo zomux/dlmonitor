@@ -30,3 +30,4 @@ arxiv.org
 @fchollet
 @hugo_larochelle
 @OriolVinyalsML
+@stanfordnlp
