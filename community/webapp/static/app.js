@@ -50,6 +50,22 @@ community.addKeyword = function(w) {
     community.updateAll();
 };
 
+community.moveKeyword = function(e, dir) {
+    var kwList = community.getKeywords();
+    var pos = $(e).data('pos');
+    if ((pos == 0 && dir < 0) || (pos >= kwList.length - 1 && dir > 0)) {
+        return;
+    }
+    var swapIdx = pos + dir;
+    var swap = kwList[swapIdx];
+    kwList[swapIdx] = kwList[pos];
+    kwList[pos] = swap;
+    console.log(pos,dir);
+    var newKeywords = kwList.join(",");
+    Cookies.set("keywords", newKeywords);
+    community.updateAll();
+};
+
 community.removeKeyword = function(e) {
     var w = $(e).data('keyword');
     if (w == undefined) {
@@ -138,9 +154,12 @@ community.placeColumns = function() {
     // Create columns
     if (kwList.length != currentNum) {
         var newHtml = "";
-        var template = $("#column-template").html()
         for (var i = 0; i < kwList.length; ++i) {
-            newHtml += template.replace("NUM", "" + i).replace("NUM", "" + i).replace("NUM", "" + i);
+            var template = $("#column-template").html()
+            for (var j = 0; j < 6; ++j) {
+                template = template.replace("NUM", "" + i);
+            }
+            newHtml += template;
         }
         $("#post-columns").html(newHtml);
     }
@@ -149,6 +168,8 @@ community.placeColumns = function() {
     for (var i = 0; i < kwList.length; ++i) {
         $("#column-title-" + i).html(kwList[i]);
         $("#close-btn-" + i).data("keyword", kwList[i])
+        $("#left-btn-" + i).data("pos", i)
+        $("#right-btn-" + i).data("pos", i)
     }
 };
 

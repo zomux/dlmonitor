@@ -294,6 +294,7 @@ ul.contact li a.icon-rss:before
 /* Posts                                                                        */
 /*********************************************************************************/
 
+
 #wrapper {
 	width: 100%;
 	padding: 0;
@@ -473,6 +474,14 @@ nav .row {
 
 .column .panel-body {
 	padding: 5px 15px;
+}
+
+.column:first-child .left-btn {
+	display: none;
+}
+
+.column:last-child .right-btn {
+	display: none;
 }
 
 /*********************************************************************************/
