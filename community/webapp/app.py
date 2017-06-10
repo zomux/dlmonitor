@@ -8,6 +8,7 @@ import datetime as DT
 app = Flask(__name__, static_url_path='/static')
 
 NUMBER_EACH_PAGE = 30
+DEFAULT_KEYWORDS = "Hot Tweets,Fresh Tweets,Hot Papers,Fresh Papers"
 
 DATE_TOKEN_SET = set(['1-week', '2-week', '1-month'])
 
@@ -29,8 +30,20 @@ def get_date_str(token):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    keywords = request.cookies.get('keywords')
+    if not keywords:
+        keywords = DEFAULT_KEYWORDS
+    else:
+        keywords = unquote(keywords)
+    target_date = get_date_str(request.cookies.get('datetoken'))
+    column_list = []
+    for kw in keywords.split(","):
+        src = "twitter" if "tweets" in kw.lower() else "arxiv"
+        num_page = 80 if src == "twitter" else NUMBER_EACH_PAGE
+        posts = get_posts(src, keywords=kw, since=target_date, start=0, num=num_page)
+        column_list.append((src, kw, posts))
 
+    return render_template("index.html", columns=column_list)
 
 @app.route('/fetch', methods=['POST'])
 def fetch():

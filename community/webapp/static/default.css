@@ -472,6 +472,10 @@ nav .row {
 	color: #0ce3ac;
 }
 
+.post-columns .column {
+	float: left;
+}
+
 .column .panel-body {
 	padding: 5px 15px;
 }

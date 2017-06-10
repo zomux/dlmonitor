@@ -8,12 +8,12 @@
 <meta name="description" content="Things happening in deep learning: arxiv, twitter, reddit" />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
-<link href="/static/default.css?v=13" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/default.css?v=14" rel="stylesheet" type="text/css" media="all" />
 <script src="https://use.fontawesome.com/f194410606.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=11"></script>
+<script type="text/javascript" src="/static/app.js?v=12"></script>
 
 </head>
 <body>
@@ -95,7 +95,29 @@
 	</div>
 	<div class="post-columns-wrapper">
 		<div class="post-columns-frame">
-		    <div class="post-columns" id="post-columns"></div>
+		    <div class="post-columns" id="post-columns">
+                {% for src, kw, posts in columns %}
+                <div class="column">
+        			<div class="panel panel-default">
+        			  <div class="panel-heading clearfix">
+        				<h3 id="column-title-{{ loop.index0 }}" class="panel-title">{{ kw }}</h3>
+        				<span id="close-btn-{{ loop.index0 }}" class="close-btn label" onclick="community.removeKeyword(this);">
+        					<span class="fa fa-close"></span>
+        				</span>
+                        <span id="right-btn-{{ loop.index0 }}" class="right-btn close-btn label" onclick="community.moveKeyword(this, 1);">
+        					<span class="fa fa-arrow-right"></span>
+        				</span>
+                        <span id="left-btn-{{ loop.index0 }}" class="left-btn close-btn label" onclick="community.moveKeyword(this, -1);">
+        					<span class="fa fa-arrow-left"></span>
+        				</span>
+        			  </div>
+        			  <div id="posts-{{ loop.index0 }}" class="panel-body">
+        				  {% include 'post_'+src+'.html' %}
+        			  </div>
+        			</div>
+        		</div>
+                {% endfor %}
+            </div>
 		</div>
 	</div>
 

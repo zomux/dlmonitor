@@ -164,7 +164,6 @@ community.placeColumns = function() {
         $("#post-columns").html(newHtml);
     }
     // Fill titles
-    $(".post-columns .column").css("float", "left");
     for (var i = 0; i < kwList.length; ++i) {
         $("#column-title-" + i).html(kwList[i]);
         $("#close-btn-" + i).data("keyword", kwList[i])
@@ -184,9 +183,10 @@ community.fixFloat = function() {
     });
 };
 
-community.updateAll = function() {
+community.updateAll = function(nofetch) {
     community.showDate();
     community.placeColumns();
+    if (nofetch == true) return;
     var kwList = community.getKeywords();
     for (var i = 0; i < kwList.length; ++i) {
         if (kwList[i].toLowerCase().includes("tweets")) {
@@ -199,7 +199,7 @@ community.updateAll = function() {
 };
 
 community.init = function() {
-    community.updateAll();
+    community.updateAll(true);
     $("#new-keyword-btn").click(community.addKeyword);
     $('#new-keyword').keypress(function (e) {
      var key = e.which;
