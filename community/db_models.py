@@ -1,5 +1,5 @@
 import sys
-from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime, Unicode
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime, Unicode, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_searchable import make_searchable
@@ -30,6 +30,9 @@ class ArxivModel(Base):
     abstract = Column(Text(collation=''))
     journal_link = Column(Text(collation=''), nullable=True)
     tag = Column(String(255))
+    introduction = Column(Text(collation=''))
+    conclusion = Column(Text(collation=''))
+    analyzed = Column(Boolean, server_default='false', default=False)
 
     # For full text search
     search_vector = Column(

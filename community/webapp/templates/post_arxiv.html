@@ -1,6 +1,6 @@
 {% for post in posts %}
 <div class="post">
-    <div class="title"><a href="{{ post.arxiv_url }}" target="_blank">{{ post.title }}</a></div>
+    <div class="title"><a href="/arxiv/{{ post.id }}/{{ post.title.lower().replace(" ", "-") }}" target="_blank">{{ post.title }}</a></div>
     <div class="author">{{ post.authors }}</div>
     <div class="tools clearfix">
         <span class="btns">

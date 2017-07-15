@@ -42,8 +42,11 @@ class TwitterSource(Source):
         for result in results:
             matches = re.findall(r"(https://t\.co/[^ .]{10})", result.text)
             result.href_text = result.text
-            for match in matches:
-                result.href_text = result.href_text.replace(match, '<a href="{}">{}</a>'.format(match, match))
+            try:
+                for match in matches:
+                    result.href_text = result.href_text.replace(match, '<a href="{}">{}</a>'.format(match, match))
+            except:
+                pass
         return results
 
     def _extract_arxiv_url(self, url):

@@ -68,5 +68,11 @@ def fetch():
         "post_{}.html".format(src),
         posts=get_posts(src, keywords=kw, since=target_date, start=start, num=num_page))
 
+@app.route("/arxiv/<int:arxiv_id>/<paper_str>")
+def arxiv(arxiv_id, paper_str):
+    from community.sources.arxivsrc import ArxivSource
+    post = ArxivSource().get_one_post(arxiv_id)
+    return render_template("single.html", post=post)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

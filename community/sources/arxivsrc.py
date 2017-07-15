@@ -39,6 +39,16 @@ class ArxivSource(Source):
             version = int(last_part.split("v")[-1])
         return version
 
+    def get_one_post(self, arxiv_id):
+        from ..db import get_global_session, ArxivModel
+        session = get_global_session()
+        query = session.query(ArxivModel).filter(ArxivModel.id == int(arxiv_id))
+        results = query.all()
+        if results:
+            return results[0]
+        else:
+            return None
+
     def get_posts(self, keywords=None, since=None, start=0, num=20):
         from ..db import get_global_session, ArxivModel
         if keywords:

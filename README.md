@@ -4,6 +4,7 @@
 
 1. Install postgres server
 2. `pip install -r requirements.txt`
+3. `sudo apt-get install poppler-utils`
 
 ### Setup database
 
