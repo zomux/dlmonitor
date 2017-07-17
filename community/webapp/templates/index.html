@@ -3,17 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Deep Learning Community - Monitoring Deep Learning Papers on Arxiv</title>
+<title>Deep Learning Monitor - Monitoring Deep Learning News</title>
 <meta name="keywords" content="deep learning, paper, arxiv, twitter" />
 <meta name="description" content="Things happening in deep learning: arxiv, twitter, reddit" />
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
 <link href="/static/default.css?v=15" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/mobile.css?v=1" rel="stylesheet" type="text/css" media="all" />
 <script src="https://use.fontawesome.com/f194410606.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=13"></script>
+<script type="text/javascript" src="/static/app.js?v=16"></script>
 
 </head>
 <body>
@@ -38,12 +41,12 @@
     <nav class="navbar navbar-default">
         <div class="row">
             <div class="col-md-6 logo">
-                <div><h1><a href="/">Deep Learning Community</a></h1></div>
-                <div>
+                <div><h1><a href="/">Deep Learning Monitor</a></h1></div>
+                <div class="menu">
                     &nbsp;
                     <span class="fa fa-angle-right"></span>&nbsp;&nbsp;
-                    <a href="/">Full-text Search</a> &nbsp; | &nbsp;
-                    <a href="/">About</a> &nbsp;&nbsp;
+                    <a href="/search">Full-text Search</a> &nbsp; | &nbsp;
+                    <a href="/about">About</a> &nbsp;&nbsp;
                     <span style="color:#ccc;"><span class="fa fa-angle-right"></span>&nbsp;
                      Speical Keywords: </span>
                     <a href="javascript:" onclick="community.addKeyword('Hot Papers');">Hot Papers</a>
@@ -54,7 +57,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-group" style="margin: 12px;">
+                <div class="input-group keyword-group" style="margin: 12px;">
                   <input type="text" id="new-keyword" class="form-control" placeholder="keywords">
                   <span class="input-group-btn">
                     <button id="new-keyword-btn" class="btn btn-default" type="button">Add Keyword</button>
@@ -62,9 +65,9 @@
 	  						<span id="date-info">Recent two weeks</span> <span class="caret"></span>
 	  				  </button>
 	  				  <ul class="dropdown-menu">
-	  					<li><a href="javascript:" onclick="community.filterDate('1-week');">Recent one week</a></li>
-	  					<li><a href="javascript:" onclick="community.filterDate('2-week');">Recent two weeks</a></li>
-	  					<li><a href="javascript:" onclick="community.filterDate('1-month');">Recent one month</a></li>
+	  					<li><a href="javascript:community.filterDate('1-week');" >Recent one week</a></li>
+	  					<li><a href="javascript:community.filterDate('2-week');">Recent two weeks</a></li>
+	  					<li><a href="javascript:community.filterDate('1-month');">Recent one month</a></li>
 	  				  </ul>
 	  				</div>
                   </span>

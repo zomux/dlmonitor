@@ -1,0 +1,28 @@
+@media (max-width: 767px) {
+    /* CSS goes here */
+    .menu {
+        display: none;
+    }
+    .logo h1{
+        font-size: 12px;
+        text-align: center;
+    }
+    .keyword-group input, .keyword-group button{
+        height: 22px;
+        font-size: 12px;
+        line-height: 0.3;
+    }
+    .post-columns .column {
+        float: none;
+        width: auto;
+    }
+    .post-columns-frame {
+        height: auto;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+    .post-columns {
+        width: auto;
+        height: auto;
+    }
+}

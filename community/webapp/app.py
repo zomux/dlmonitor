@@ -74,5 +74,13 @@ def arxiv(arxiv_id, paper_str):
     post = ArxivSource().get_one_post(arxiv_id)
     return render_template("single.html", post=post)
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/search")
+def search():
+    return render_template("search.html")
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

@@ -92,7 +92,8 @@ community.showKeywords = function() {
     $("#keywords").html(newHtml);
 };
 
-community.fetch = function(src_name, keyword, index, start=0) {
+community.fetch = function(src_name, keyword, index, start) {
+    if (start == undefined) start = 0;
     console.log("fetch", src_name, keyword, index, start);
     $("#posts-" + index).html(
         "<div style='text-align:center;'>"+
@@ -200,7 +201,7 @@ community.updateAll = function(nofetch) {
 
 community.init = function() {
     community.updateAll(true);
-    $("#new-keyword-btn").click(community.addKeyword);
+    $("#new-keyword-btn").on('click tap', community.addKeyword);
     $('#new-keyword').keypress(function (e) {
      var key = e.which;
      if(key == 13)  // the enter key code
@@ -209,4 +210,5 @@ community.init = function() {
         return false;
       }
     });
+    // $("#btn-one-week").on('click touchend', function(){ alert(1);community.filterDate('1-week'); });
 };

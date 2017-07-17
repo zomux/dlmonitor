@@ -1,118 +1,92 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{{post.title}} - Paper Detail</title>
-<meta name="keywords" content="deep learning, paper, arxiv, twitter" />
-<meta name="description" content="Things happening in deep learning: arxiv, twitter, reddit" />
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
-<link href="/static/default.css?v=14" rel="stylesheet" type="text/css" media="all" />
-<script src="https://use.fontawesome.com/f194410606.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=12"></script>
-
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>{{post.title}} - Paper Detail</title>
+    <meta content="deep learning, paper, arxiv, twitter" name="keywords">
+    <meta content="Things happening in deep learning: arxiv, twitter, reddit" name="description">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet">
+    <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/default.css?v=14" media="all" rel="stylesheet" type="text/css">
+    <script src="https://use.fontawesome.com/f194410606.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js" type="text/javascript">
+    </script>
+    <script src="/static/app.js?v=12" type="text/javascript">
+    </script>
 </head>
 <body>
-
-
-<div id="wrapper" class="container">
-
-    <nav class="navbar navbar-default">
-        <div class="row">
-            <div class="col-md-6 logo">
-                <div><h1><a href="/">Deep Learning Community</a></h1></div>
-                <div>
-                    &nbsp;
-                    Paper Detail
+    <div class="container" id="wrapper">
+        <nav class="navbar navbar-default">
+            <div class="row">
+                <div class="col-md-6 logo">
+                    <div>
+                        <h1><a href="/">Deep Learning Monitor</a></h1>
+                    </div>
+                    <div>
+                        &nbsp; Paper Detail
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group" style="margin: 12px;float:right;">
+                        <button class="btn btn-default" onclick="window.close()" type="button">Close This Page</button>
+                    </div><!-- /input-group -->
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="input-group" style="margin: 12px;float:right;">
-                    <button class="btn btn-default" type="button" onclick="window.close()">Close This Page</button>
-                </div><!-- /input-group -->
+        </nav>
+        <div class="container single-arxiv">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="article">
+                        <h3><a href="{{post.arxiv_url}}" target="_blank">{{ post.title }}</a></h3>
+                        <ul class="list-unstyled list-inline">
+                            <li><i class="fa fa-calendar"></i> {{ post.published_time }}</li>
+                            <li><i class="fa fa-user"></i> {{ post.authors }}</li>
+                            <li><i class="fa fa-comments"></i> {{ post.popularity }}</li>
+                        </ul>
+                        <div class="article-content">
+                            <h3 style="color:#0ce3ac;">Abstract</h3>
+                            <p style="font-size: 20px;">{{ post.abstract }}</p>
+                            <p>&nbsp;</p>
+                            <h3 style="color:#0ce3ac;">Introduction (beta)</h3>
+                            <p style="font-size: 20px;">{{ post.introduction }}</p>
+                            <p>&nbsp;</p>
+                            <h3 style="color:#0ce3ac;">Conclusion (beta)</h3>
+                            <p style="font-size: 20px;">{{ post.conclusion }}</p>
+                            <p>&nbsp;</p>
+                        </div><!-- <ul class="list-unstyled list-inline blog-tags">
+                                <li><a href="#"><span class="fa fa-tag"></span> Example heading</a></li>
+                                <li><a href="#"><span class="fa fa-tag"></span> Example heading</a></li>
+                                <li><a href="#"><span class="fa fa-tag"></span> Example heading</a></li>
+                            </ul> -->
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div>
+                        <div class="list-group" id="list-group">
+                            <a class="list-group-item" href="{{ post.arxiv_url }}">
+                                <span class="fa-stack fa-md"></span>
+                                <i class="fa-stack-2x fa fa-circle">&nbsp;Arxiv</i>
+                            </a>
+                            <a class="list-group-item" href="{{ post.pdf_url }}">
+                                <span class="fa-stack fa-md"></span>
+                                <i class="fa-stack-2x fa fa-circle">&nbsp;PDF</i>
+                            </a>
+                            <a class="list-group-item" href="https://www.mendeley.com/import/?url={{ post.arxiv_url }}">
+                                <span class="fa-stack fa-md"></span>
+                                <i class="fa-stack-2x fa fa-circle">&nbsp;Mendeley</i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>
-
-    <div class="container single-arxiv">
-
-				<div class="row">
-					<div class="col-md-10">
-
-						<div class="article">
-							<h3><a href="{{ post.arxiv_url }}" target="_blank">{{ post.title }}</a></h3>
-
-							<ul class="list-unstyled list-inline">
-								<li><i class="fa fa-calendar"></i> {{ post.published_time }}</li>
-								<li><i class="fa fa-user"></i> {{  post.authors }}</li>
-								<li><i class="fa fa-comments"></i> {{ post.popularity }} </li>
-							</ul>
-
-							<div class="article-content">
-                                <h3 style="color:#0ce3ac;">Abstract</h3>
-								<p style="font-size:  20px;">{{ post.abstract }}</p>
-                                <p>&nbsp;</p>
-                                <h3 style="color:#0ce3ac;">Introduction (beta)</h3>
-								<p style="font-size:  20px;">{{ post.introduction }}</p>
-                                <p>&nbsp;</p>
-                                <h3 style="color:#0ce3ac;">Conclusion (beta)</h3>
-								<p style="font-size:  20px;">{{ post.conclusion }}</p>
-                                <p>&nbsp;</p>
-                            </div>
-
-							<!-- <ul class="list-unstyled list-inline blog-tags">
-								<li><a href="#"><span class="fa fa-tag"></span> Example heading</a></li>
-								<li><a href="#"><span class="fa fa-tag"></span> Example heading</a></li>
-								<li><a href="#"><span class="fa fa-tag"></span> Example heading</a></li>
-							</ul> -->
-
-						</div>
-
-					</div>
-
-					<div class="col-md-2">
-
-						<div>
-
-<h3 style="color: #fff;">Tools</h3>
-
-<div class="list-group" id="list-group">
-
-  <a href="#" class="list-group-item">
-		<span class="fa-stack fa-md">
-		<i class="fa-stack-2x fa fa-circle "></i>
-		</span>
-		<span class=""><a href="{{ post.pdf_url }}">PDF</a></span>
-  </a>
-  <a href="#" class="list-group-item">
-		<span class="fa-stack fa-md">
-		<i class="fa-stack-2x fa fa-circle "></i>
-		</span>
-		<span class=""><a href="https://www.mendeley.com/import/?url={{ post.arxiv_url }}">Mendeley</a></span>
-  </a>
-  <a href="#" class="list-group-item">
-		<span class="fa-stack fa-md">
-		<i class="fa-stack-2x fa fa-circle "></i>
-		</span>
-		<span class=""><a href="#">Evernote</a></span>
-  </a>
-</div>
-
-
-						</div>
-
-					</div>
-				</div>
-
-
-    </div>
-    <!-- <div id="copyright" class="container">
-    	<p>&copy; Raphael Shu. All rights reserved.</p>
+        </div><!-- <div id="copyright" class="container">
+        <p>&copy; Raphael Shu. All rights reserved.</p>
     </div> -->
-</div>
+    </div>
 </body>
 </html>
