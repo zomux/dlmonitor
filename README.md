@@ -1,4 +1,16 @@
-# Deep Community: All things happening in deep learning
+# DLMonitor: Monitoring all things happening in deep learning
+
+### Purpose
+
+This project aims to save time and energy for deep learning folks.
+It monitors new things on multiple sources and find out those important to you.
+Currently, the data sources include:
+
+- Arxiv papers
+- Tweets
+- Reddit posts
+
+Take a look at the public server: https://deeplearn.org
 
 ### Install
 
