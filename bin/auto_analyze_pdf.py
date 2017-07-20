@@ -1,8 +1,8 @@
 import sys, os
 sys.path.append(".")
-from community.db import session_scope, ArxivModel
-from community.analyzer import PDFAnalyzer
-from community.settings import PDF_PATH
+from dlmonitor.db import session_scope, ArxivModel
+from dlmonitor.analyzer import PDFAnalyzer
+from dlmonitor.settings import PDF_PATH
 from sqlalchemy import desc
 from argparse import ArgumentParser
 import logging

@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from community.settings import *
+from dlmonitor.settings import *
 import twitter
 
 tw = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY, consumer_secret=TWITTER_CONSUMER_SECRET,

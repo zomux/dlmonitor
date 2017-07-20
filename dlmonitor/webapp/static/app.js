@@ -4,12 +4,12 @@ Javascript for Deep Community.
 
 INIT_KEYWORDS = "Hot Tweets,Fresh Tweets,Hot Papers,Fresh Papers";
 
-community = {
+dlmonitor = {
     ajaxCount: 0,
     previewTimeout: null,
 };
 
-community.getKeywords = function() {
+dlmonitor.getKeywords = function() {
     var keywords = Cookies.get('keywords');
     if (Cookies.get('keywords') == undefined) {
         keywords = INIT_KEYWORDS;
@@ -23,7 +23,7 @@ community.getKeywords = function() {
 };
 
 // This requires js-cookie
-community.addKeyword = function(w) {
+dlmonitor.addKeyword = function(w) {
     if (w == undefined || typeof(w) == "object" || !w) {
         w = $("#new-keyword").val()
     }
@@ -39,7 +39,7 @@ community.addKeyword = function(w) {
         return;
     }
     $("#new-keyword").val("")
-    var kwList = community.getKeywords();
+    var kwList = dlmonitor.getKeywords();
     if (kwList.length > 10) {
         alert("No more than 10 keywords, please.");
         return;
@@ -47,13 +47,13 @@ community.addKeyword = function(w) {
     kwList.push(w.trim());
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
-    // community.showKeywords();
-    community.switchPreview(false);
-    community.updateAll();
+    // dlmonitor.showKeywords();
+    dlmonitor.switchPreview(false);
+    dlmonitor.updateAll();
 };
 
-community.moveKeyword = function(e, dir) {
-    var kwList = community.getKeywords();
+dlmonitor.moveKeyword = function(e, dir) {
+    var kwList = dlmonitor.getKeywords();
     var pos = $(e).data('pos');
     if ((pos == 0 && dir < 0) || (pos >= kwList.length - 1 && dir > 0)) {
         return;
@@ -65,43 +65,43 @@ community.moveKeyword = function(e, dir) {
     console.log(pos,dir);
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
-    community.updateAll();
+    dlmonitor.updateAll();
 };
 
-community.removeKeyword = function(e) {
+dlmonitor.removeKeyword = function(e) {
     var w = $(e).data('keyword');
     if (w == undefined) {
         return;
     }
-    var kwList = community.getKeywords();
+    var kwList = dlmonitor.getKeywords();
     var index = kwList.indexOf(w);
     if (index > -1) {
         kwList.splice(index, 1);
     }
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
-    community.showKeywords();
-    community.updateAll();
+    dlmonitor.showKeywords();
+    dlmonitor.updateAll();
 };
 
 // Deprecated
-community.showKeywords = function() {
+dlmonitor.showKeywords = function() {
     var newHtml = "";
-    var kwList = community.getKeywords();
+    var kwList = dlmonitor.getKeywords();
     kwList.forEach(function(kw){
-        newHtml += '<span class="label label-success" onclick="community.removeKeyword(this);">' + kw + '</span>';
+        newHtml += '<span class="label label-success" onclick="dlmonitor.removeKeyword(this);">' + kw + '</span>';
     });
     $("#keywords").html(newHtml);
 };
 
-community.fetch = function(src_name, keyword, index, start) {
+dlmonitor.fetch = function(src_name, keyword, index, start) {
     if (start == undefined) start = 0;
     console.log("fetch", src_name, keyword, index, start);
     $("#posts-" + index).html(
         "<div style='text-align:center;'>"+
         "<img src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif'/>"+
         "</div>");
-    community.ajaxCount ++;
+    dlmonitor.ajaxCount ++;
     $.ajax({
        url: '/fetch',
        type: 'POST',
@@ -111,18 +111,18 @@ community.fetch = function(src_name, keyword, index, start) {
           keyword: keyword
        },
        error: function() {
-           community.ajaxCount --;
+           dlmonitor.ajaxCount --;
            alert("Error when fetching data.");
        },
        success: function(data) {
           // console.log(data);
-          community.ajaxCount --;
+          dlmonitor.ajaxCount --;
           $("#posts-" + index).html(data);
        }
     });
 };
 
-community.convertDateInfo = function(token) {
+dlmonitor.convertDateInfo = function(token) {
     var dateinfo = "Recent two weeks";
     switch (token) {
         case '1-week':
@@ -138,21 +138,21 @@ community.convertDateInfo = function(token) {
     return dateinfo;
 };
 
-community.showDate = function() {
+dlmonitor.showDate = function() {
     var datetoken = Cookies.get('datetoken');
     if (!datetoken) {
         datetoken = '2-week';
     }
-    $("#date-info").html(community.convertDateInfo(datetoken));
+    $("#date-info").html(dlmonitor.convertDateInfo(datetoken));
 };
 
-community.filterDate = function(token) {
+dlmonitor.filterDate = function(token) {
     Cookies.set('datetoken', token);
-    community.updateAll();
+    dlmonitor.updateAll();
 };
 
-community.placeColumns = function() {
-    var kwList = community.getKeywords();
+dlmonitor.placeColumns = function() {
+    var kwList = dlmonitor.getKeywords();
     var currentNum = $(".post-columns .column").length
     // Create columns
     if (kwList.length != currentNum) {
@@ -176,8 +176,8 @@ community.placeColumns = function() {
 };
 
 // Deprecated
-community.fixFloat = function() {
-    if (community.ajaxCount != 0) return;
+dlmonitor.fixFloat = function() {
+    if (dlmonitor.ajaxCount != 0) return;
     var threshold = $("#post-columns").position().left + 1200 / 2;
     $(".post-columns .column").each(function(i, e) {
         if ($(e).position().left > threshold) {
@@ -186,22 +186,22 @@ community.fixFloat = function() {
     });
 };
 
-community.updateAll = function(nofetch) {
-    community.showDate();
-    community.placeColumns();
+dlmonitor.updateAll = function(nofetch) {
+    dlmonitor.showDate();
+    dlmonitor.placeColumns();
     if (nofetch == true) return;
-    var kwList = community.getKeywords();
+    var kwList = dlmonitor.getKeywords();
     for (var i = 0; i < kwList.length; ++i) {
         if (kwList[i].toLowerCase().includes("tweets")) {
             var src = 'twitter';
         } else {
             var src = 'arxiv';
         }
-        community.fetch(src, kwList[i], i, start=0);
+        dlmonitor.fetch(src, kwList[i], i, start=0);
     }
 };
 
-community.switchPreview = function(flag) {
+dlmonitor.switchPreview = function(flag) {
     if (flag) {
         $(".preview").show();
         $(".post-columns").hide();
@@ -211,9 +211,9 @@ community.switchPreview = function(flag) {
     }
 };
 
-community.init = function() {
-    community.updateAll(true);
-    $("#new-keyword-btn").on('click tap', community.addKeyword);
+dlmonitor.init = function() {
+    dlmonitor.updateAll(true);
+    $("#new-keyword-btn").on('click tap', dlmonitor.addKeyword);
     $('#new-keyword').keypress(function(e) {
      var key = e.which;
      if(key == 13)  // the enter key code
@@ -223,23 +223,23 @@ community.init = function() {
       }
     });
     $('#new-keyword').on('keyup', function() {
-        clearTimeout(community.previewTimeout);
-        community.previewTimeout = setTimeout(function() {
+        clearTimeout(dlmonitor.previewTimeout);
+        dlmonitor.previewTimeout = setTimeout(function() {
             var text = $("#new-keyword").val();
             if ($("#new-keyword").is(":focus") && text.length >= 3) {
                 $("#preview-kw").html(text);
-                community.switchPreview(true);
-                community.fetch('arxiv', text, 'preview');
+                dlmonitor.switchPreview(true);
+                dlmonitor.fetch('arxiv', text, 'preview');
             } else {
-                community.switchPreview(false);
+                dlmonitor.switchPreview(false);
             }
         }, 200);
         if ($("#new-keyword").val().length < 3) {
-            community.switchPreview(false);
+            dlmonitor.switchPreview(false);
         }
     });
     $("#close-btn-preview").on('click tap', function() {
-            community.switchPreview(false);
+            dlmonitor.switchPreview(false);
             $("#new-keyword").val('');
     });
 };

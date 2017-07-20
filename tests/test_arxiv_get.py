@@ -1,7 +1,7 @@
 import sys
 sys.path.append(".")
-from community.sources.arxivsrc import ArxivSource
-from community.db import close_global_session
+from dlmonitor.sources.arxivsrc import ArxivSource
+from dlmonitor.db import close_global_session
 
 if __name__ == '__main__':
     src = ArxivSource()

@@ -7,9 +7,9 @@ import os, sys
 dir_path = os.path.dirname(os.path.realpath(__file__))
 parent_path = os.path.dirname(dir_path)
 sys.path.append(parent_path)
-import community
-from community.db_models import Base
-from community.settings import DATABASE_URL
+import dlmonitor
+from dlmonitor.db_models import Base
+from dlmonitor.settings import DATABASE_URL
 
 # add your model's MetaData object here
 # for 'autogenerate' support
@@ -43,7 +43,7 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    from community.db import engine
+    from dlmonitor.db import engine
 
     with engine.connect() as connection:
         context.configure(

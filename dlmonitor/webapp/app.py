@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask import render_template, send_from_directory
-from community.db import close_global_session
-from community.fetcher import get_posts
+from dlmonitor.db import close_global_session
+from dlmonitor.fetcher import get_posts
 from urllib2 import unquote
 import datetime as DT
 
@@ -70,7 +70,7 @@ def fetch():
 
 @app.route("/arxiv/<int:arxiv_id>/<paper_str>")
 def arxiv(arxiv_id, paper_str):
-    from community.sources.arxivsrc import ArxivSource
+    from dlmonitor.sources.arxivsrc import ArxivSource
     post = ArxivSource().get_one_post(arxiv_id)
     return render_template("single.html", post=post)
 

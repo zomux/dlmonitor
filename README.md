@@ -11,7 +11,7 @@
 1. Create a `.env` file in the project root.
 
 ```
-DATABASE_USER=deepcommunity
+DATABASE_USER=dlmonitor
 DATABASE_PASSWD=something
 
 TWITTER_CONSUMER_KEY=something

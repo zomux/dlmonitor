@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from community.fetcher import fetch_sources
+from dlmonitor.fetcher import fetch_sources
 from argparse import ArgumentParser
 import logging
 logging.basicConfig(level=logging.INFO)

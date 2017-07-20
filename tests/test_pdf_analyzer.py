@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from community.analyzer import PDFAnalyzer
+from dlmonitor.analyzer import PDFAnalyzer
 from argparse import ArgumentParser
 
 if __name__ == '__main__':

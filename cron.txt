@@ -1,2 +1,2 @@
 # Please change the path to your project here
-30 * * * * ({ PYTHONPATH="/home/backend/deepcommunity" /usr/bin/python /home/backend/deepcommunity/bin/fetch_new_sources.py all; } | tee /tmp/1cxcTJCSsvy8LIA3.stdout) 3>&1 1>&2 2>&3 | tee /tmp/1cxcTJCSsvy8LIA3.stderr
+30 * * * * ({ PYTHONPATH="/home/backend/dlmonitor" /usr/bin/python /home/backend/dlmonitor/bin/fetch_new_sources.py all; } | tee /tmp/1cxcTJCSsvy8LIA3.stdout) 3>&1 1>&2 2>&3 | tee /tmp/1cxcTJCSsvy8LIA3.stderr

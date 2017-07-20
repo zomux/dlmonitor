@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-from community.sources.arxivsrc import ArxivSource
+from dlmonitor.sources.arxivsrc import ArxivSource
 
 if __name__ == '__main__':
     src = ArxivSource()
