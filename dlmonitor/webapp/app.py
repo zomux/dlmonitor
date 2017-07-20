@@ -8,7 +8,7 @@ import datetime as DT
 app = Flask(__name__, static_url_path='/static')
 
 NUMBER_EACH_PAGE = 30
-DEFAULT_KEYWORDS = "Hot Tweets,Fresh Tweets,Hot Papers,Fresh Papers"
+DEFAULT_KEYWORDS = "Hot Tweets,Hot Papers,Fresh Papers,reinforcement learning,language"
 
 DATE_TOKEN_SET = set(['1-week', '2-week', '1-month'])
 

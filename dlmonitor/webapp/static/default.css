@@ -264,6 +264,11 @@ ul.contact li a.icon-rss:before
 /* Nav                                                                        */
 /*********************************************************************************/
 
+.menu {
+	overflow: hidden;
+	height: 20px;
+}
+
 .keywords {
 	padding: 20px 0;
 	line-height: 32px;
