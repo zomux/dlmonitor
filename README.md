@@ -46,7 +46,13 @@ Fetch Arxiv papers and tweets.
 python bin/fetch_new_sources.py all
 ```
 
-### Setup web server
+### Run test server
+
+```bash
+PYTHONPATH="." python dlmonitor/webapp/app.py
+```
+
+### Setup production server
 
 1. Install nginx
 
