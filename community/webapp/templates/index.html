@@ -10,14 +10,14 @@
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/darkly/bootstrap.min.css" rel="stylesheet">
-<link href="/static/default.css?v=16" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/default.css?v=17" rel="stylesheet" type="text/css" media="all" />
 <link href="/static/mobile.css?v=2" rel="stylesheet" type="text/css" media="all" />
 <script src="https://use.fontawesome.com/f194410606.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!-- <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+<script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=18"></script>
+<script type="text/javascript" src="/static/app.js?v=17"></script>
 
 </head>
 <body>
@@ -50,11 +50,11 @@
                     <a href="/about">About</a> &nbsp;&nbsp;
                     <span style="color:#ccc;"><span class="fa fa-angle-right"></span>&nbsp;
                      Speical Monitors: </span>
-                    <a href="javascript:" onclick="dlmonitor.addKeyword('Hot Papers');">Hot Papers</a>
+                    <a href="javascript:" onclick="community.addKeyword('Hot Papers');">Hot Papers</a>
                     &nbsp; | &nbsp;
-                    <a href="javascript:" onclick="dlmonitor.addKeyword('Fresh Papers');">Fresh Papers</a>
+                    <a href="javascript:" onclick="community.addKeyword('Fresh Papers');">Fresh Papers</a>
                     &nbsp; | &nbsp;
-                    <a href="javascript:" onclick="dlmonitor.addKeyword('Hot Tweets');">Hot Tweets</a>
+                    <a href="javascript:" onclick="community.addKeyword('Hot Tweets');">Hot Tweets</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -66,9 +66,9 @@
 	  						<span id="date-info">Recent two weeks</span> <span class="caret"></span>
 	  				  </button>
 	  				  <ul class="dropdown-menu">
-	  					<li><a href="javascript:dlmonitor.filterDate('1-week');" >Recent one week</a></li>
-	  					<li><a href="javascript:dlmonitor.filterDate('2-week');">Recent two weeks</a></li>
-	  					<li><a href="javascript:dlmonitor.filterDate('1-month');">Recent one month</a></li>
+	  					<li><a href="javascript:community.filterDate('1-week');" >Recent one week</a></li>
+	  					<li><a href="javascript:community.filterDate('2-week');">Recent two weeks</a></li>
+	  					<li><a href="javascript:community.filterDate('1-month');">Recent one month</a></li>
 	  				  </ul>
 	  				</div>
                   </span>
@@ -81,13 +81,13 @@
 			<div class="panel panel-default">
 			  <div class="panel-heading clearfix">
 				<h3 id="column-title-NUM" class="panel-title"></h3>
-				<span id="close-btn-NUM" class="close-btn label" onclick="dlmonitor.removeKeyword(this);">
+				<span id="close-btn-NUM" class="close-btn label" onclick="community.removeKeyword(this);">
 					<span class="fa fa-close"></span>
 				</span>
-                <span id="right-btn-NUM" class="right-btn close-btn label" onclick="dlmonitor.moveKeyword(this, 1);">
+                <span id="right-btn-NUM" class="right-btn close-btn label" onclick="community.moveKeyword(this, 1);">
 					<span class="fa fa-arrow-right"></span>
 				</span>
-                <span id="left-btn-NUM" class="left-btn close-btn label" onclick="dlmonitor.moveKeyword(this, -1);">
+                <span id="left-btn-NUM" class="left-btn close-btn label" onclick="community.moveKeyword(this, -1);">
 					<span class="fa fa-arrow-left"></span>
 				</span>
 			  </div>
@@ -105,13 +105,13 @@
         			<div class="panel panel-default">
         			  <div class="panel-heading clearfix">
         				<h3 id="column-title-{{ loop.index0 }}" class="panel-title">{{ kw }}</h3>
-        				<span id="close-btn-{{ loop.index0 }}" class="close-btn label" onclick="dlmonitor.removeKeyword(this);">
+        				<span id="close-btn-{{ loop.index0 }}" class="close-btn label" onclick="community.removeKeyword(this);">
         					<span class="fa fa-close"></span>
         				</span>
-                        <span id="right-btn-{{ loop.index0 }}" class="right-btn close-btn label" onclick="dlmonitor.moveKeyword(this, 1);">
+                        <span id="right-btn-{{ loop.index0 }}" class="right-btn close-btn label" onclick="community.moveKeyword(this, 1);">
         					<span class="fa fa-arrow-right"></span>
         				</span>
-                        <span id="left-btn-{{ loop.index0 }}" class="left-btn close-btn label" onclick="dlmonitor.moveKeyword(this, -1);">
+                        <span id="left-btn-{{ loop.index0 }}" class="left-btn close-btn label" onclick="community.moveKeyword(this, -1);">
         					<span class="fa fa-arrow-left"></span>
         				</span>
         			  </div>
@@ -141,8 +141,11 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    dlmonitor.init();
+    community.init();
 </script>
-<script type="text/javascript" src="/static/track.js"></script>
+<!-- No Footer -->
+<!-- <div id="copyright" class="container">
+	<p>&copy; Raphael Shu. All rights reserved.</p>
+</div> -->
 </body>
 </html>

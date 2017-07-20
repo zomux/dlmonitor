@@ -228,6 +228,7 @@ dlmonitor.init = function() {
             var text = $("#new-keyword").val();
             if ($("#new-keyword").is(":focus") && text.length >= 3) {
                 $("#preview-kw").html(text);
+                $("#posts-preview").height(($(window).height() - 160) + "px")
                 dlmonitor.switchPreview(true);
                 dlmonitor.fetch('arxiv', text, 'preview');
             } else {
