@@ -5,7 +5,8 @@ Javascript for Deep Community.
 INIT_KEYWORDS = "Hot Tweets,Fresh Tweets,Hot Papers,Fresh Papers";
 
 community = {
-    ajaxCount: 0
+    ajaxCount: 0,
+    previewTimeout: null,
 };
 
 community.getKeywords = function() {
@@ -47,6 +48,7 @@ community.addKeyword = function(w) {
     var newKeywords = kwList.join(",");
     Cookies.set("keywords", newKeywords);
     // community.showKeywords();
+    community.switchPreview(false);
     community.updateAll();
 };
 
@@ -199,10 +201,20 @@ community.updateAll = function(nofetch) {
     }
 };
 
+community.switchPreview = function(flag) {
+    if (flag) {
+        $(".preview").show();
+        $(".post-columns").hide();
+    } else {
+        $(".preview").hide();
+        $(".post-columns").show();
+    }
+};
+
 community.init = function() {
     community.updateAll(true);
     $("#new-keyword-btn").on('click tap', community.addKeyword);
-    $('#new-keyword').keypress(function (e) {
+    $('#new-keyword').keypress(function(e) {
      var key = e.which;
      if(key == 13)  // the enter key code
       {
@@ -210,5 +222,24 @@ community.init = function() {
         return false;
       }
     });
-    // $("#btn-one-week").on('click touchend', function(){ alert(1);community.filterDate('1-week'); });
+    $('#new-keyword').on('keyup', function() {
+        clearTimeout(community.previewTimeout);
+        community.previewTimeout = setTimeout(function() {
+            var text = $("#new-keyword").val();
+            if ($("#new-keyword").is(":focus") && text.length >= 3) {
+                $("#preview-kw").html(text);
+                community.switchPreview(true);
+                community.fetch('arxiv', text, 'preview');
+            } else {
+                community.switchPreview(false);
+            }
+        }, 200);
+        if ($("#new-keyword").val().length < 3) {
+            community.switchPreview(false);
+        }
+    });
+    $("#close-btn-preview").on('click tap', function() {
+            community.switchPreview(false);
+            $("#new-keyword").val('');
+    });
 };

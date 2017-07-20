@@ -25,4 +25,8 @@
         width: auto;
         height: auto;
     }
+
+    .preview .panel {
+        width: 100%;
+    }
 }
