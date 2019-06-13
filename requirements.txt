@@ -10,3 +10,5 @@ gunicorn == 19.7.1
 supervisor == 3.3.1
 six == 1.10.0
 alembic == 0.9.2
+mendeley == 0.3.2
+pyopenssl == 19.0.0

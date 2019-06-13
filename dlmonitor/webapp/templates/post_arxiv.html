@@ -6,7 +6,11 @@
         <span class="btns">
             <span class="label label-default">{{ post.published_time.strftime('%Y-%m-%d') }}</span>
             <button type="button" class="btn btn-info" onclick="window.open('{{ post.pdf_url }}', '_blank');">PDF</button>
-            <button type="button" class="btn btn-danger" onclick="window.open('https://www.mendeley.com/import/?url={{ post.arxiv_url }}', '_blank');">Mendeley</button>
+            {% if ma_authorized %}
+                <button type="button" class="btn btn-danger" onclick="dlmonitor.save_mendeley('{{ post.pdf_url }}', '{{ post.title }}');">Save</button>
+            {% else %}
+                <button type="button" class="btn btn-danger" onclick="window.open('https://www.mendeley.com/import/?url={{ post.arxiv_url }}', '_blank');">Mendeley</button>
+            {% endif %}
             {% if post.popularity > 50 %}
             <span class="label label-hot">Super Hot</span>
             {% elif post.popularity > 3 %}

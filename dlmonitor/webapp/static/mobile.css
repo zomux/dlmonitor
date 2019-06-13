@@ -29,4 +29,9 @@
     .preview .panel {
         width: 100%;
     }
+
+    .mendeley-box {
+        padding-left: 60%;
+        width: 100%;
+    }
 }

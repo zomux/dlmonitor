@@ -10,14 +10,15 @@
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="https://bootswatch.com/3/darkly/bootstrap.min.css" rel="stylesheet">
-<link href="/static/default.css?v=19" rel="stylesheet" type="text/css" media="all" />
-<link href="/static/mobile.css?v=3" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/default.css?v=20" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/mobile.css?v=5" rel="stylesheet" type="text/css" media="all" />
 <script src="https://use.fontawesome.com/f194410606.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <!-- <script type="text/javascript" src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<script type="text/javascript" src="/static/app.js?v=19"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+<script type="text/javascript" src="/static/app.js?v=20"></script>
 
 </head>
 <body>
@@ -26,12 +27,12 @@
 
     <nav class="navbar navbar-default">
         <div class="row">
-            <div class="col-md-6 logo">
-                <div><h1><a href="/">Deep Learning Monitor</a></h1></div>
+            <div class="col-md-4 logo">
+                <div style="white-space: nowrap;overflow: hidden;"><h1><a href="/">Deep Learning Monitor</a></h1></div>
                 <div class="menu">
                     &nbsp;
                     <span class="fa fa-angle-right"></span>&nbsp;&nbsp;
-                    <a href="/search">Full-text Search</a> &nbsp; | &nbsp;
+                    <!-- <a href="/search">Full-text Search</a> &nbsp; | &nbsp; -->
                     <a href="/about">About</a> &nbsp;&nbsp;
                     <span style="color:#ccc;"><span class="fa fa-angle-right"></span>&nbsp;
                      Speical Monitors: </span>
@@ -55,9 +56,28 @@
 	  					<li><a href="javascript:dlmonitor.filterDate('2-week');">Recent two weeks</a></li>
 	  					<li><a href="javascript:dlmonitor.filterDate('1-month');">Recent one month</a></li>
 	  				  </ul>
-	  				</div>
                   </span>
                 </div><!-- /input-group -->
+            </div>
+            <div class="col-md-2 mendeley-wrapper">
+                {% if ma_authorized %}
+                <div class="mendeley-box" style="margin: 12px 0 12px 10%;">
+                    <div style="width: 45px; float: left;">
+                        <img src="{{ ma_session.profiles.me.photo.standard }}" />
+                    </div>
+                    <div style="float: left;">
+                        <div class="profile">
+                            {{ ma_firstname }} <br/>
+                            <a href="/logout">Log Out</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                {% else %}
+                <div class="input-group keyword-group" style="margin: 12px 0;">
+                    <input type="button" id="mendeley-btn" class="btn btn-danger" value="Mendeley Log In" onclick="window.open('{{ mendeley_login }}', '_self');" />
+                </div>
+                {% endif %}
             </div>
     </nav>
 

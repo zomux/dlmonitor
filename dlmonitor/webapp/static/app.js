@@ -211,6 +211,48 @@ dlmonitor.switchPreview = function(flag) {
     }
 };
 
+dlmonitor.save_mendeley = function(pdf_url, paper_title) {
+    $.notify("Saving " + paper_title, "info");
+    dlmonitor.ajaxCount ++;
+    $.ajax({
+       url: '/save_mendeley',
+       type: 'GET',
+       data: {
+          url: pdf_url
+       },
+       error: function() {
+            dlmonitor.ajaxCount --;
+            $.notify("Error when saving paper.", "error");
+       },
+       success: function(data) {
+          // console.log(data);
+          dlmonitor.ajaxCount --;
+          $.notify(data, "success");
+       }
+    });
+};
+
+dlmonitor.load_fulltext = function(arxiv_token) {
+  dlmonitor.ajaxCount ++;
+  $.ajax({
+     url: '/load_fulltext/' + arxiv_token,
+     type: 'GET',
+     error: function() {
+          dlmonitor.ajaxCount --;
+          $("#latex-content").html("An error is detected when loading the paper.");
+     },
+     success: function(data) {
+        // console.log(data);
+        dlmonitor.ajaxCount --;
+        if (data == "NOT_AVAILABE") {
+          $("#latex-content").html("This feature is not avaialbe for this paper.");
+        } else {
+          $("#latex-content").html(data);
+        }
+     }
+  });
+}
+
 dlmonitor.init = function() {
     dlmonitor.updateAll(true);
     $("#new-keyword-btn").on('click tap', dlmonitor.addKeyword);
