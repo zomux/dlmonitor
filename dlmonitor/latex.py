@@ -1,12 +1,12 @@
 import urllib2
 import os
+import subprocess
 
 from dlmonitor import settings
 
 def build_paper_html(arxiv_id):
     src_path = "{}/{}".format(settings.SOURCE_PATH, arxiv_id)
     html_path = "{}/main.html".format(src_path)
-    return False
     if os.path.exists(src_path):
         return html_path if os.path.exists(html_path) else None
     opener = urllib2.build_opener()
@@ -17,7 +17,7 @@ def build_paper_html(arxiv_id):
     if (int(file_size) / 1024. / 1024. > 15):
         # File too big
         os.mkdir(src_path)
-        return False
+        return None
     print("download {}: {}".format(arxiv_id, file_size))
     data = page.read()
     os.mkdir(src_path)
@@ -26,23 +26,28 @@ def build_paper_html(arxiv_id):
     os.chdir(src_path)
     os.system("tar xzf {} --directory {}".format(tgz_path, src_path))
     texfiles = [fn for fn in os.listdir(src_path) if fn.endswith(".tex")]
-    select_texfile = texfiles[0]
-    if len(texfiles) > 1:
-        for fn in texfiles:
-            text = open("{}/{}".format(src_path, fn)).read()
-            if "begin{document}" in text:
-                select_texfile = fn
-                break
     if texfiles:
-        os.system("latexml --includestyles --dest=main.xml {}".format(select_texfile.replace(".tex", "")))
+        select_texfile = texfiles[0]
+        if len(texfiles) > 1:
+            for fn in texfiles:
+                text = open("{}/{}".format(src_path, fn)).read()
+                if "begin{document}" in text:
+                    select_texfile = fn
+                    break
+        cmd = "latexml --includestyles --dest=main.xml {}".format(select_texfile.replace(".tex", ""))
+        os.system(cmd)
+        os.system("latexmlpost --dest=main.html main.xml")
         os.system("latexmlpost --dest=main.html main.xml")
     os.remove(tgz_path)
+    open("{}/.loaded".format(src_path), "wb").write("loaded")
     return html_path if os.path.exists(html_path) else None
 
 def retrieve_paper_html(arxiv_token):
     src_path = "{}/{}".format(settings.SOURCE_PATH, arxiv_token)
     html_path = "{}/main.html".format(src_path)
-    if os.path.exists(src_path) and not os.path.exists(html_path):
+    if os.path.exists(src_path) and not os.path.exists("{}/.loaded".format(src_path)):
+        html_body = "PROCESSING"
+    elif os.path.exists(src_path) and not os.path.exists(html_path):
         html_body = "NOT_AVAILABE"
     elif os.path.exists(src_path) and os.path.exists(html_path):
         html_body = open(html_path).read().decode("utf-8")

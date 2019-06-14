@@ -58,5 +58,16 @@ class TwitterModel(Base):
     search_vector = Column(TSVectorType('text'))
 
     def __repr__(self):
-        template = '<Arxiv(id="{0}", user_name="{1}")>'
+        template = '<Twitter(id="{0}", user_name="{1}")>'
         return str_repr(template.format(self.id, self.user))
+
+class WorkingQueueModel(Base):
+
+    __tablename__ = "working"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    type = Column(String(255), nullable=True)
+    param = Column(String(255), nullable=True)
+
+    def __repr__(self):
+        return __tablename__ + self.id

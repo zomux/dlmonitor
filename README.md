@@ -38,6 +38,14 @@ SUPERVISORD_PASSWD=something
 
 Run `bash bin/create_db.sh`
 
+
+### Install Quick Read dependencies
+
+1. install cpan
+2. install text::Unidecode in cpan
+3. git clone https://github.com/brucemiller/LaTeXML
+4. perl Makefile.PL; make; make install
+
 ### Fetch resources
 
 Fetch Arxiv papers and tweets.
@@ -62,8 +70,13 @@ PYTHONPATH="." python dlmonitor/webapp/app.py
 bash bin/config_server.sh
 ```
 
-2. Start Gunicorn processes through supervisord
+3. Start Gunicorn processes through supervisord
 
 ```bash
 bash bin/start_supervisord.sh
+```
+4. Start arxiv source loading worker
+
+```bash
+PYTHONPATH="." python bin/auto_load_arxiv.py --forever
 ```

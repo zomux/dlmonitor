@@ -7,6 +7,7 @@
     <meta content="Things happening in deep learning: arxiv, twitter, reddit" name="description">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet">
     <link href="https://bootswatch.com/3/darkly/bootstrap.min.css" rel="stylesheet">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <link href="/static/LaTeXML.css" media="all" rel="stylesheet" type="text/css">
     <link href="/static/ltx-article.css" media="all" rel="stylesheet" type="text/css">
     <link href="/static/default.css?v=15" media="all" rel="stylesheet" type="text/css">
@@ -18,7 +19,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js" type="text/javascript">
     </script>
-    <script src="/static/app.js?v=12" type="text/javascript">
+    <script src="/static/app.js?v=13" type="text/javascript">
     </script>
 </head>
 <body>
@@ -54,11 +55,11 @@
                             <h3 style="color:#0ce3ac;">Abstract</h3>
                             <p style="font-size: 20px;">{{ post.abstract }}</p>
                             <p>&nbsp;</p>
-                            <h3 style="color:#0ce3ac;">Read Right Now (beta)</h3>
+                            <h3 style="color:#0ce3ac;">Quick Read (beta)</h3>
                             <div id="latex-content">
                               {% if html_body == "NOT_AVAILABE" %}
                               This feature is not avaialbe for this paper.
-                              {% elif html_body == "NOT_EXIST" %}
+                              {% elif html_body == "NOT_EXIST" or html_body == "PROCESSING" %}
                               <div class="sk-folding-cube">
                                 <div class="sk-cube1 sk-cube"></div>
                                 <div class="sk-cube2 sk-cube"></div>
@@ -100,7 +101,7 @@
             </div>
         </div>
     </div>
-    {% if html_body == "NOT_EXIST" %}
+    {% if html_body == "NOT_EXIST" or html_body == "PROCESSING" %}
       <script type="text/javascript" defer="defer">
           dlmonitor.load_fulltext("{{ arxiv_token }}");
       </script>

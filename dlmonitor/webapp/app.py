@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, redirect, session, send_from_directory
 from flask import render_template, send_from_directory
-from dlmonitor.db import close_global_session
+from dlmonitor.db import close_global_session, get_global_session
 from dlmonitor.fetcher import get_posts
 from dlmonitor import settings
 from urllib2 import unquote
@@ -161,9 +161,19 @@ def save_mendeley():
 
 @app.route("/load_fulltext/<arxiv_token>")
 def load_fulltext(arxiv_token):
-    from dlmonitor.latex import build_paper_html, retrieve_paper_html
-    build_paper_html(arxiv_token)
+    from dlmonitor.db_models import WorkingQueueModel
+    db_session = get_global_session()
+    job = WorkingQueueModel(
+        type="load_arxiv",
+        param=arxiv_token
+    )
+    db_session.add(job)
+    db_session.commit()
+    return "OK"
 
+@app.route("/retrieve_fulltext/<arxiv_token>")
+def retrieve_fulltext(arxiv_token):
+    from dlmonitor.latex import retrieve_paper_html
     return retrieve_paper_html(arxiv_token)
 
 @app.route("/arxiv_files/<arxiv_token>/<path:fp>")
