@@ -1,8 +1,19 @@
 import urllib2
 import os
-import subprocess
+import shlex
+from subprocess import Popen, PIPE
+from threading import Timer
 
 from dlmonitor import settings
+
+def execute_with_timeout(cmd):
+    proc = Popen(shlex.split(cmd))
+    timer = Timer(5 * 60, proc.kill)
+    try:
+        timer.start()
+        proc.communicate()
+    finally:
+        timer.cancel()
 
 def build_paper_html(arxiv_id):
     src_path = "{}/{}".format(settings.SOURCE_PATH, arxiv_id)
@@ -35,9 +46,9 @@ def build_paper_html(arxiv_id):
                     select_texfile = fn
                     break
         cmd = "latexml --includestyles --dest=main.xml {}".format(select_texfile.replace(".tex", ""))
-        os.system(cmd)
-        os.system("latexmlpost --dest=main.html main.xml")
-        os.system("latexmlpost --dest=main.html main.xml")
+        execute_with_timeout(cmd)
+        execute_with_timeout("latexmlpost --dest=main.html main.xml")
+        execute_with_timeout("latexmlpost --dest=main.html main.xml")
     os.remove(tgz_path)
     open("{}/.loaded".format(src_path), "wb").write("loaded")
     return html_path if os.path.exists(html_path) else None
