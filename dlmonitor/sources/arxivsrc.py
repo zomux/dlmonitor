@@ -1,7 +1,6 @@
 import os, sys
 from ..db import create_engine
-from base import Source
-from arxiv import mod_query_result, prune_query_result
+from .base import Source
 from sqlalchemy_searchable import search
 from sqlalchemy import desc
 import feedparser
@@ -13,11 +12,53 @@ import logging
 SEARCH_KEY = "cat:cs.CV+OR+cat:cs.AI+OR+cat:cs.LG+OR+cat:cs.CL+OR+cat:cs.NE+OR+cat:stat.ML"
 MAX_QUERY_NUM = 10000
 
+def mod_query_result(result):
+    """
+    Modify the query result to add required fields.
+    """
+    # Extract ArXiv URL from id
+    result["arxiv_url"] = result["id"]
+    
+    # Extract PDF URL from links
+    pdf_url = None
+    for link in result.get("links", []):
+        if link.get("type") == "application/pdf":
+            pdf_url = link.get("href")
+            break
+    result["pdf_url"] = pdf_url or ""
+    
+    # Convert authors from list of dicts to list of strings
+    authors_list = []
+    for author in result.get("authors", []):
+        if isinstance(author, dict) and "name" in author:
+            authors_list.append(author["name"])
+        elif isinstance(author, str):
+            authors_list.append(author)
+    result["authors"] = authors_list
+    
+    # Add journal reference from arxiv_comment if available
+    result["journal_reference"] = result.get("arxiv_comment", "")
+
+def prune_query_result(result):
+    """
+    Prune unnecessary fields from the query result.
+    """
+    # Keep only the fields we need for the database
+    keep_fields = [
+        "arxiv_url", "title", "summary", "pdf_url", "authors", 
+        "updated_parsed", "journal_reference", "tags"
+    ]
+    
+    # Remove fields we don't need
+    keys_to_remove = [key for key in result.keys() if key not in keep_fields]
+    for key in keys_to_remove:
+        result.pop(key, None)
+
 def query_arxiv(start=0, max_results=100):
     """
     Get papers from arxiv.
     """
-    results = (feedparser.parse('http://export.arxiv.org/api/query?search_query=' + SEARCH_KEY +
+    results = (feedparser.parse('https://export.arxiv.org/api/query?search_query=' + SEARCH_KEY +
         '&sortBy=lastUpdatedDate&sortOrder=descending&start=' + str(start) + '&max_results=' + str(max_results)))
     if results.get('status') != 200:
         raise Exception("HTTP Error " + str(results.get('status', 'no status')) + " in query")

@@ -7,7 +7,7 @@ from sqlalchemy_utils.types import TSVectorType
 
 if 'Base' not in globals():
     Base = declarative_base()
-    make_searchable()
+    make_searchable(Base.metadata)
 
 def str_repr(string):
     if sys.version_info.major == 3:

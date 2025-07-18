@@ -1,6 +1,6 @@
 import os, sys
 import re
-from base import Source
+from .base import Source
 from sqlalchemy_searchable import search
 from sqlalchemy import desc
 from ..settings import PROJECT_ROOT, TWITTER_ACCESS_TOKEN, TWITTER_CONSUMER_KEY, TWITTER_ACCESS_SECRET, TWITTER_CONSUMER_SECRET

@@ -2,9 +2,9 @@
 A class for fetching all sources.
 """
 
-from sources.arxivsrc import ArxivSource
-from sources.twittersrc import TwitterSource
-from db import Base, engine
+from .sources.arxivsrc import ArxivSource
+from .sources.twittersrc import TwitterSource
+from .db import Base, engine
 
 def get_source(src_name):
     if src_name == 'arxiv':
