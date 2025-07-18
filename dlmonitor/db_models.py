@@ -10,10 +10,8 @@ if 'Base' not in globals():
     make_searchable(Base.metadata)
 
 def str_repr(string):
-    if sys.version_info.major == 3:
-        return string
-    else:
-        return string.encode('utf-8')
+    # In Python 3, strings are already Unicode
+    return string
 
 class ArxivModel(Base):
 

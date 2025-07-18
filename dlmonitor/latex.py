@@ -1,4 +1,4 @@
-import urllib2
+import urllib.request
 import os
 import shlex
 from subprocess import Popen, PIPE
@@ -20,11 +20,11 @@ def build_paper_html(arxiv_id):
     html_path = "{}/main.html".format(src_path)
     if os.path.exists(src_path):
         return html_path if os.path.exists(html_path) else None
-    opener = urllib2.build_opener()
+    opener = urllib.request.build_opener()
     opener.addheaders = [('Referer', 'https://arxiv.org/format/{}'.format(arxiv_id)), ('User-Agent', 'Mozilla/5.0')]
     page = opener.open("https://arxiv.org/e-print/{}".format(arxiv_id))
     meta = page.info()
-    file_size = meta.getheaders("Content-Length")[0]
+    file_size = meta.get("Content-Length")
     if (int(file_size) / 1024. / 1024. > 15):
         # File too big
         os.mkdir(src_path)
@@ -50,7 +50,7 @@ def build_paper_html(arxiv_id):
         execute_with_timeout("latexmlpost --dest=main.html main.xml")
         execute_with_timeout("latexmlpost --dest=main.html main.xml")
     os.remove(tgz_path)
-    open("{}/.loaded".format(src_path), "wb").write("loaded")
+    open("{}/.loaded".format(src_path), "wb").write(b"loaded")
     return html_path if os.path.exists(html_path) else None
 
 def retrieve_paper_html(arxiv_token):
@@ -61,7 +61,7 @@ def retrieve_paper_html(arxiv_token):
     elif os.path.exists(src_path) and not os.path.exists(html_path):
         html_body = "NOT_AVAILABE"
     elif os.path.exists(src_path) and os.path.exists(html_path):
-        html_body = open(html_path).read().decode("utf-8")
+        html_body = open(html_path).read()
         html_body = html_body.split("<body>")[-1]
         html_body = html_body.split("</body>")[0]
         html_body = html_body.replace('<img src="', '<img src="/arxiv_files/{}/'.format(arxiv_token))

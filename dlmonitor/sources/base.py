@@ -4,9 +4,7 @@ Base class of all sources.
 
 from abc import ABCMeta, abstractmethod
 
-class Source(object):
-
-    __metaclass__ = ABCMeta
+class Source(object, metaclass=ABCMeta):
 
     def get_posts(self, keywords=None, since=None, start=0, num=100):
         """
@@ -25,4 +23,4 @@ class Source(object):
         Fetch a ton of resources to initialize the databse.
         If this function is not implementated, well, just fetch new ones.
         """
-        fetch_new()
+        self.fetch_new()

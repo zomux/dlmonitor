@@ -4,7 +4,8 @@ from flask import render_template, send_from_directory
 from dlmonitor.db import close_global_session, get_global_session
 from dlmonitor.fetcher import get_posts
 from dlmonitor import settings
-from urllib2 import unquote
+from urllib.parse import unquote
+from urllib.request import urlretrieve
 import datetime as DT
 
 from mendeley import Mendeley
@@ -152,7 +153,7 @@ def save_mendeley():
     local_pdf = "{}/{}.pdf".format(settings.PDF_PATH, arxiv_id)
     remote_pdf = "http://arxiv.org/pdf/{}.pdf".format(arxiv_id)
     if not os.path.exists(local_pdf):
-        urllib.urlretrieve(remote_pdf, local_pdf)
+        urlretrieve(remote_pdf, local_pdf)
 
     # Create file
     ma_session.documents.create_from_file(local_pdf)

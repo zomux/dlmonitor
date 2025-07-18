@@ -62,7 +62,7 @@ class TwitterSource(Source):
         tw = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY, consumer_secret=TWITTER_CONSUMER_SECRET,
                          access_token_key=TWITTER_ACCESS_TOKEN, access_token_secret=TWITTER_ACCESS_SECRET)
         with session_scope() as session:
-            tw_watch_list = map(str.strip, open(TW_DATA_PATH).readlines())
+            tw_watch_list = list(map(str.strip, open(TW_DATA_PATH).readlines()))
             for tw_name in tw_watch_list:
                 logging.info("get tweets from {}".format(tw_name))
                 if tw_name.startswith("@"):

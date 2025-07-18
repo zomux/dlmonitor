@@ -11,4 +11,4 @@ reddit = praw.Reddit(client_id='ognB0CMmO7EHRg',
 posts = reddit.subreddit("MachineLearning").search("Concrete Dropout")
 for p in posts:
     import pdb;pdb.set_trace()
-    print p
+    print(p)
