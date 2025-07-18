@@ -1,0 +1,8 @@
+# Optional dependencies for web application features
+# Install with: pip install -r requirements.txt -r requirements-web.txt
+
+# Mendeley integration (may cause dependency conflicts)
+mendeley>=0.3.2
+
+# Additional web dependencies if needed
+requests>=2.31.0 

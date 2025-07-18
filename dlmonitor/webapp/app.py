@@ -8,8 +8,15 @@ from urllib.parse import unquote
 from urllib.request import urlretrieve
 import datetime as DT
 
-from mendeley import Mendeley
-from mendeley.session import MendeleySession
+# Optional Mendeley integration
+try:
+    from mendeley import Mendeley
+    from mendeley.session import MendeleySession
+    MENDELEY_AVAILABLE = True
+except ImportError:
+    MENDELEY_AVAILABLE = False
+    print("Warning: Mendeley package not available. Install with: pip install -r requirements-web.txt")
+
 import oauthlib
 
 
@@ -23,9 +30,12 @@ NUMBER_EACH_PAGE = 30
 DEFAULT_KEYWORDS = "Hot Tweets,Hot Papers,Fresh Papers,reinforcement learning,language"
 DATE_TOKEN_SET = set(['1-week', '2-week', '1-month'])
 
-# Mendeley
-MENDELEY_REDIRECT = "{}/oauth".format(settings.HOME_URL)
-mendeley = Mendeley(settings.MENDELEY_CLIENTID, settings.MENDELEY_SECRET, MENDELEY_REDIRECT)
+# Mendeley (optional)
+if MENDELEY_AVAILABLE:
+    MENDELEY_REDIRECT = "{}/oauth".format(settings.HOME_URL)
+    mendeley = Mendeley(settings.MENDELEY_CLIENTID, settings.MENDELEY_SECRET, MENDELEY_REDIRECT)
+else:
+    mendeley = None
 
 def get_date_str(token):
     """
@@ -58,23 +68,29 @@ def index():
         posts = get_posts(src, keywords=kw, since=target_date, start=0, num=num_page)
         column_list.append((src, kw, posts))
 
-    # Mendeley
-    auth = mendeley.start_authorization_code_flow()
-    if "ma_token" in session and session["ma_token"] is not None:
-        ma_session = MendeleySession(mendeley, session['ma_token'])
-        try:
-            ma_firstname = ma_session.profiles.me.first_name
-        except:
-            session['ma_token'] = None
-            ma_session =None
+    # Mendeley (optional)
+    if MENDELEY_AVAILABLE and mendeley:
+        auth = mendeley.start_authorization_code_flow()
+        if "ma_token" in session and session["ma_token"] is not None:
+            ma_session = MendeleySession(mendeley, session['ma_token'])
+            try:
+                ma_firstname = ma_session.profiles.me.first_name
+            except:
+                session['ma_token'] = None
+                ma_session =None
+                ma_firstname = None
+        else:
+            ma_session = None
             ma_firstname = None
+        ma_authorized = ma_session is not None and ma_session.authorized
+        mendeley_login = auth.get_login_url()
     else:
         ma_session = None
         ma_firstname = None
-
-    ma_authorized = ma_session is not None and ma_session.authorized
+        ma_authorized = False
+        mendeley_login = None
     return render_template(
-        "index.html", columns=column_list, mendeley_login=auth.get_login_url(),
+        "index.html", columns=column_list, mendeley_login=mendeley_login,
         ma_session=ma_session, ma_authorized=ma_authorized, ma_firstname=ma_firstname
     )
 
@@ -97,8 +113,8 @@ def fetch():
 
     num_page = 80 if src == "twitter" else NUMBER_EACH_PAGE
 
-    # Mendeley
-    ma_authorized = "ma_token" in session and session["ma_token"] is not None
+    # Mendeley (optional)
+    ma_authorized = MENDELEY_AVAILABLE and "ma_token" in session and session["ma_token"] is not None
 
     return render_template(
         "post_{}.html".format(src),
@@ -127,6 +143,9 @@ def search():
 
 @app.route('/oauth')
 def auth_return():
+    if not MENDELEY_AVAILABLE or not mendeley:
+        return "Mendeley integration not available", 404
+    
     auth = mendeley.start_authorization_code_flow(state=request.args.get("state"))
     mendeley_session = auth.authenticate(request.url)
 
@@ -137,6 +156,9 @@ def auth_return():
 
 @app.route("/save_mendeley")
 def save_mendeley():
+    if not MENDELEY_AVAILABLE or not mendeley:
+        return "Mendeley integration not available"
+    
     import urllib
     if "ma_token" in session and session["ma_token"] is not None:
         ma_session = MendeleySession(mendeley, session['ma_token'])

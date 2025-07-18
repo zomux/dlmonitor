@@ -9,6 +9,5 @@ praw>=7.0.0
 gunicorn>=21.0.0
 six>=1.16.0
 alembic>=1.13.0
-mendeley>=0.3.2
 pyopenssl>=24.0.0
 feedparser>=6.0.0
