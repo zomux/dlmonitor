@@ -36,9 +36,9 @@ else
     exit 1
 fi
 
-# SSH into remote server and restart service
-echo "Restarting service on remote server..."
-ssh $REMOTE_USER@$REMOTE_HOST "cd $REMOTE_PATH && bash scripts/launch_server.sh"
+# SSH into remote server, fix permissions, and restart service
+echo "Fixing permissions and restarting service on remote server..."
+ssh $REMOTE_USER@$REMOTE_HOST "cd $REMOTE_PATH && bash scripts/fix_permissions.sh && bash scripts/launch_server.sh"
 
 # Check if SSH command was successful
 if [ $? -eq 0 ]; then
