@@ -16,38 +16,40 @@ TW_DATA_PATH = "{}/data/twitter_watching_list.txt".format(PROJECT_ROOT)
 class TwitterSource(Source):
 
     def get_posts(self, keywords=None, since=None, start=0, num=30):
-        from ..db import get_global_session, TwitterModel
+        from ..db import session_scope, TwitterModel
         if keywords:
             keywords = keywords.strip()
-        session = get_global_session()
-        query = session.query(TwitterModel)
-        if since:
-            # Filter date
-            assert isinstance(since, str)
-            query = query.filter(TwitterModel.published_time >= since)
-        if not keywords or keywords.lower() == 'fresh tweets':
-            # Recent papers
-            results = (query.order_by(desc(TwitterModel.published_time))
-                       .offset(start).limit(num).all())
-        elif keywords.lower() == 'hot tweets':
-            results = (query.order_by(desc(TwitterModel.popularity))
-                              .offset(start).limit(num).all())
-        else:
-            search_kw = " or ".join(keywords.split(","))
-            searched_query = search(query, search_kw, sort=True)
-            results = searched_query.offset(start).limit(num).all()
+        with session_scope() as session:
+            query = session.query(TwitterModel)
+            if since:
+                # Filter date
+                assert isinstance(since, str)
+                query = query.filter(TwitterModel.published_time >= since)
+            if not keywords or keywords.lower() == 'fresh tweets':
+                # Recent papers
+                results = (query.order_by(desc(TwitterModel.published_time))
+                           .offset(start).limit(num).all())
+            elif keywords.lower() == 'hot tweets':
+                results = (query.order_by(desc(TwitterModel.popularity))
+                                  .offset(start).limit(num).all())
+            else:
+                search_kw = " or ".join(keywords.split(","))
+                searched_query = search(query, search_kw, sort=True)
+                results = searched_query.offset(start).limit(num).all()
 
-        # Unescape HTML
-        parser = HTMLParser()
-        for result in results:
-            matches = re.findall(r"(https://t\.co/[^ .]{10})", result.text)
-            result.href_text = result.text
-            try:
-                for match in matches:
-                    result.href_text = result.href_text.replace(match, '<a href="{}">{}</a>'.format(match, match))
-            except:
-                pass
-        return results
+            # Unescape HTML
+            parser = HTMLParser()
+            for result in results:
+                matches = re.findall(r"(https://t\.co/[^ .]{10})", result.text)
+                result.href_text = result.text
+                try:
+                    for match in matches:
+                        result.href_text = result.href_text.replace(match, '<a href="{}">{}</a>'.format(match, match))
+                except:
+                    pass
+                # Expunge to avoid DetachedInstanceError
+                session.expunge(result)
+            return results
 
     def _extract_arxiv_url(self, url):
         arxiv_url = url.replace("/pdf/", "/abs/")

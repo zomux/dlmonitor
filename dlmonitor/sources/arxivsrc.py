@@ -81,38 +81,45 @@ class ArxivSource(Source):
         return version
 
     def get_one_post(self, arxiv_id):
-        from ..db import get_global_session, ArxivModel
-        session = get_global_session()
-        query = session.query(ArxivModel).filter(ArxivModel.id == int(arxiv_id))
-        results = query.all()
-        if results:
-            return results[0]
-        else:
-            return None
+        from ..db import session_scope, ArxivModel
+        with session_scope() as session:
+            query = session.query(ArxivModel).filter(ArxivModel.id == int(arxiv_id))
+            results = query.all()
+            if results:
+                # Eagerly load all attributes to avoid DetachedInstanceError
+                result = results[0]
+                session.expunge(result)
+                return result
+            else:
+                return None
 
     def get_posts(self, keywords=None, since=None, start=0, num=20):
-        from ..db import get_global_session, ArxivModel
+        from ..db import session_scope, ArxivModel
         if keywords:
             keywords = keywords.strip()
-        session = get_global_session()
-        query = session.query(ArxivModel)
-        if since:
-            # Filter date
-            assert isinstance(since, str)
-            query = query.filter(ArxivModel.published_time >= since)
-        if not keywords or keywords.lower() == 'fresh papers':
-            # Recent papers
-            results = (query.order_by(desc(ArxivModel.published_time))
-                       .offset(start).limit(num).all())
-        elif keywords.lower() == 'hot papers':
-            results = (query.order_by(desc(ArxivModel.popularity))
-                              .offset(start).limit(num).all())
-        else:
-            # search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
-            search_kw = " or ".join(keywords.split(","))
-            searched_query = search(query, search_kw, sort=True)
-            results = searched_query.offset(start).limit(num).all()
-        return results
+        with session_scope() as session:
+            query = session.query(ArxivModel)
+            if since:
+                # Filter date
+                assert isinstance(since, str)
+                query = query.filter(ArxivModel.published_time >= since)
+            if not keywords or keywords.lower() == 'fresh papers':
+                # Recent papers
+                results = (query.order_by(desc(ArxivModel.published_time))
+                           .offset(start).limit(num).all())
+            elif keywords.lower() == 'hot papers':
+                results = (query.order_by(desc(ArxivModel.popularity))
+                                  .offset(start).limit(num).all())
+            else:
+                # search_kw = " or ".join(["({})".format(x) for x in keywords.split(",")])
+                search_kw = " or ".join(keywords.split(","))
+                searched_query = search(query, search_kw, sort=True)
+                results = searched_query.offset(start).limit(num).all()
+
+            # Expunge all results to avoid DetachedInstanceError
+            for result in results:
+                session.expunge(result)
+            return results
 
     def fetch_new(self):
         from ..db import session_scope, ArxivModel
